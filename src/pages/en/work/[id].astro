@@ -43,7 +43,7 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
         {klant && <><dt>client</dt><dd>{klant}</dd></>}
       </dl>
       {infoHtml && <div class="info" set:html={infoHtml} />}
-      <a class="back" href={pathFor(lang, '/')}>← {ui[lang].backToWork}</a>
+      <a class="back" href={pathFor(lang, '/')} data-back-to-home>← {ui[lang].backToWork}</a>
     </aside>
   </div>
 
@@ -76,4 +76,13 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
     if (document.readyState === 'complete') scrollToHash();
     else window.addEventListener('load', scrollToHash);
   }
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-back-to-home]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    });
+  });
 </script>
