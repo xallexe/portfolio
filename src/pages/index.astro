@@ -46,7 +46,9 @@ const photosB = flatten('b');
   const colA = document.getElementById('col-a');
   const colB = document.getElementById('col-b');
 
-  // Snap to a random photo boundary so columns never start mid-image.
+  // SessionStorage key — survives detail→back navigation but resets on tab close.
+  const STORAGE_KEY = 'home-scroll-nl';
+
   function scrollToRandomPhoto(col: HTMLElement) {
     const photos = col.querySelectorAll<HTMLElement>('.photo');
     if (photos.length === 0) return;
@@ -60,15 +62,41 @@ const photosB = flatten('b');
     scrollToRandomPhoto(colB);
   }
 
+  function saveScrollState() {
+    if (!colA || !colB) return;
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ a: colA.scrollTop, b: colB.scrollTop }));
+  }
+
+  function restoreScrollState(): boolean {
+    if (!colA || !colB) return false;
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    try {
+      const { a, b } = JSON.parse(raw) as { a: number; b: number };
+      colA.scrollTo({ top: a });
+      colB.scrollTo({ top: b });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Save scroll state right before navigating into a project detail.
+  document.querySelectorAll<HTMLAnchorElement>('.col .thumb').forEach((link) => {
+    link.addEventListener('click', () => saveScrollState());
+  });
+
+  // Clicking Home while already on home explicitly means "shuffle" — drop saved state.
   document.querySelectorAll<HTMLAnchorElement>('.leftnav nav a[href="/"]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       history.replaceState(null, '', '/');
+      sessionStorage.removeItem(STORAGE_KEY);
       randomOverview();
     });
   });
 
   window.addEventListener('load', () => {
-    randomOverview();
+    if (!restoreScrollState()) randomOverview();
   });
 </script>

@@ -44,6 +44,8 @@ const photosB = flatten('b');
   const colA = document.getElementById('col-a');
   const colB = document.getElementById('col-b');
 
+  const STORAGE_KEY = 'home-scroll-en';
+
   function scrollToRandomPhoto(col: HTMLElement) {
     const photos = col.querySelectorAll<HTMLElement>('.photo');
     if (photos.length === 0) return;
@@ -57,15 +59,39 @@ const photosB = flatten('b');
     scrollToRandomPhoto(colB);
   }
 
+  function saveScrollState() {
+    if (!colA || !colB) return;
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ a: colA.scrollTop, b: colB.scrollTop }));
+  }
+
+  function restoreScrollState(): boolean {
+    if (!colA || !colB) return false;
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    try {
+      const { a, b } = JSON.parse(raw) as { a: number; b: number };
+      colA.scrollTo({ top: a });
+      colB.scrollTo({ top: b });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('.col .thumb').forEach((link) => {
+    link.addEventListener('click', () => saveScrollState());
+  });
+
   document.querySelectorAll<HTMLAnchorElement>('.leftnav nav a[href="/en/"]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       history.replaceState(null, '', '/en/');
+      sessionStorage.removeItem(STORAGE_KEY);
       randomOverview();
     });
   });
 
   window.addEventListener('load', () => {
-    randomOverview();
+    if (!restoreScrollState()) randomOverview();
   });
 </script>
