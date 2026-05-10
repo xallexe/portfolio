@@ -1,22 +1,22 @@
 order: 1
-name: "Project 1"
+name: Project 1
 title: ""
-medium: ""
+medium: Print media
 klant: ""
 info: ""
 column: ""
 photos:
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_1.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_1.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_2.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_2.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_3.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_3.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_5.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_5.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6_1.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6_1.JPG
     info: ""
-  - file: "/uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_7.JPG"
+  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_7.JPG
     info: ""
