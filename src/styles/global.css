@@ -327,13 +327,19 @@ button {
   letter-spacing: 0.12em;
 }
 
+.contact p {
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
 .contact .socials {
   list-style: none;
-  margin: 1.5rem 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
+  line-height: 1.5;
 }
 
 .contact .socials a {
