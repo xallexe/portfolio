@@ -5,6 +5,13 @@ import { ui } from '~/lib/i18n';
 import { site } from '~/lib/projects';
 
 const lang = 'nl' as const;
+
+const socials: { label: string; url: string }[] = [
+  { label: 'Instagram', url: site.instagram || '' },
+  { label: 'Behance', url: site.behance || '' },
+  { label: 'LinkedIn', url: site.linkedin || '' },
+  { label: 'Website', url: site.website || '' },
+].filter((s) => s.url.trim().length > 0);
 ---
 
 <Base lang={lang} title={ui[lang].contact}>
@@ -16,6 +23,15 @@ const lang = 'nl' as const;
         <strong>{site.artist}</strong><br />
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
+      {socials.length > 0 && (
+        <ul class="socials">
+          {socials.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   </div>
 </Base>
