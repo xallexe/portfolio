@@ -1,10 +1,6 @@
-# Site-wide settings (artist info, contact, social links).
-# Edit via the CMS at /admin or directly in this file.
-artist: "Axelle Hostyn"
-email: "axelle.hostyn@gmail.com"
-
-# Sociale links — leeg laten als niet van toepassing.
-instagram: ""
+artist: Axelle Hostyn
+email: axelle.hostyn@gmail.com
+instagram: https://www.instagram.com/axellehostyn
 behance: ""
 linkedin: ""
 website: ""
