@@ -1,5 +1,7 @@
 # Axelle Hostyn — portfolio
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6ce6de1f-8269-4cd8-ba0f-ffe252bdd207/deploy-status)](https://app.netlify.com/projects/precious-panda-b2809f/deploys)
+
 Custom Astro static site, content managed via Decap CMS, deployed on Netlify.
 
 ## Stack
