@@ -1,0 +1,30 @@
+---
+import type { Lang } from '~/lib/i18n';
+import { localized } from '~/lib/i18n';
+import type { Project } from '~/lib/projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+
+const name = localized(lang, project.name, project.name_en);
+const title = localized(lang, project.title, project.title_en);
+const medium = localized(lang, project.medium, project.medium_en);
+const klant = project.klant?.trim() ?? '';
+const info = localized(lang, project.info, project.info_en);
+
+const metaItems = [title, medium, klant].filter((s) => s.length > 0);
+---
+
+<header class="proj-header" id={project.id} data-project={project.id}>
+  <h2>{name}</h2>
+  {metaItems.length > 0 && (
+    <div class="meta">
+      {metaItems.map((m) => <span>{m}</span>)}
+    </div>
+  )}
+  {info && <p class="info">{info}</p>}
+</header>

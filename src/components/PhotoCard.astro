@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import type { Lang } from '~/lib/i18n';
+import { localized } from '~/lib/i18n';
+import { getPhoto } from '~/lib/photos';
+import type { PhotoEntry } from '~/lib/projects';
+
+interface Props {
+  entry: PhotoEntry;
+  lang: Lang;
+  /** 'vertical' (home: stacked column) or 'horizontal' (detail: side-by-side row). */
+  variant?: 'vertical' | 'horizontal';
+}
+
+const { entry, lang, variant = 'vertical' } = Astro.props;
+const meta = getPhoto(entry.file);
+const caption = localized(lang, entry.info, entry.info_en);
+const wrapClass = variant === 'horizontal' ? 'photo-h' : 'photo';
+
+const sizes = variant === 'horizontal'
+  ? '(max-width: 720px) 100vw, 80vh'
+  : '(max-width: 720px) 100vw, 50vw';
+---
+
+{meta && (
+  <figure class={wrapClass}>
+    <button
+      type="button"
+      class="thumb"
+      data-lightbox-src={meta.src}
+      data-lightbox-caption={caption}
+      aria-label={caption || entry.file}
+    >
+      <Image src={meta} alt={caption || entry.file} widths={[600, 1000, 1600]} sizes={sizes} loading="lazy" />
+    </button>
+    {caption && variant === 'vertical' && <figcaption class="caption">{caption}</figcaption>}
+  </figure>
+)}
+{!meta && (
+  <figure class={wrapClass}>
+    <div class="thumb" style="aspect-ratio: 4/5; display:flex; align-items:center; justify-content:center; color:#999; font-size:0.75rem;">
+      missing: {entry.file}
+    </div>
+  </figure>
+)}

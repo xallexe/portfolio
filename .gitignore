@@ -1,0 +1,29 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Local-only originals (high-res TIFs that we converted to JPG for the web)
+src/assets/_originals_tif/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code per-machine settings (paths, permissions, contains shell snippets)
+.claude/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

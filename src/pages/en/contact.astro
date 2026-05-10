@@ -1,0 +1,21 @@
+---
+import Base from '~/layouts/Base.astro';
+import LeftNav from '~/components/LeftNav.astro';
+import { ui } from '~/lib/i18n';
+import { site } from '~/lib/projects';
+
+const lang = 'en' as const;
+---
+
+<Base lang={lang} title={ui[lang].contact}>
+  <div class="layout">
+    <LeftNav lang={lang} current="contact" />
+    <main class="contact">
+      <h1>{ui[lang].contact}</h1>
+      <p>
+        <strong>{site.artist}</strong><br />
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </main>
+  </div>
+</Base>

@@ -1,0 +1,70 @@
+---
+import '~/styles/global.css';
+import type { Lang } from '~/lib/i18n';
+import { site } from '~/lib/projects';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+}
+
+const { lang, title } = Astro.props;
+const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Custom cursor: render the glyph for "q" in blockhead-illust-ot to a
+      // canvas, convert to PNG data URL, apply as cursor on <html>.
+      // Change CURSOR_CHAR if a different glyph in the font is desired.
+      const CURSOR_CHAR = 'q';
+      const CURSOR_FONT = 'blockhead-illust-ot';
+      const CURSOR_SIZE = 32;
+
+      function applyCursor() {
+        const dpr = window.devicePixelRatio || 1;
+        const c = document.createElement('canvas');
+        c.width = CURSOR_SIZE * dpr;
+        c.height = CURSOR_SIZE * dpr;
+        const ctx = c.getContext('2d');
+        if (!ctx) return;
+        ctx.scale(dpr, dpr);
+        ctx.font = `${CURSOR_SIZE - 4}px "${CURSOR_FONT}", sans-serif`;
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#000';
+        ctx.fillText(CURSOR_CHAR, CURSOR_SIZE / 2, CURSOR_SIZE / 2);
+        const url = c.toDataURL('image/png');
+        const half = Math.round(CURSOR_SIZE / 2);
+        const value = `url('${url}') ${half} ${half}, auto`;
+        // Inject a global rule that overrides the browser's default pointer
+        // cursor on links/buttons so the custom glyph stays visible everywhere.
+        const styleId = 'custom-cursor-style';
+        let style = document.getElementById(styleId) as HTMLStyleElement | null;
+        if (!style) {
+          style = document.createElement('style');
+          style.id = styleId;
+          document.head.appendChild(style);
+        }
+        style.textContent = `*, *::before, *::after { cursor: ${value} !important; }`;
+      }
+
+      if ('fonts' in document) {
+        document.fonts.load(`${CURSOR_SIZE - 4}px "${CURSOR_FONT}"`).then(() => {
+          applyCursor();
+        }).catch(() => applyCursor());
+      } else {
+        window.addEventListener('load', applyCursor);
+      }
+    </script>
+  </body>
+</html>

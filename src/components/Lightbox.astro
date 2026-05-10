@@ -1,0 +1,52 @@
+---
+import type { Lang } from '~/lib/i18n';
+import { ui } from '~/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<div class="lightbox" id="lightbox" data-open="false" role="dialog" aria-modal="true" aria-hidden="true">
+  <button type="button" class="close" id="lightbox-close">{ui[lang].close} ✕</button>
+  <img id="lightbox-img" alt="" />
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox') as HTMLElement;
+  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lbClose = document.getElementById('lightbox-close') as HTMLButtonElement;
+
+  function open(src: string, alt: string) {
+    lbImg.src = src;
+    lbImg.alt = alt;
+    lb.dataset.open = 'true';
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.dataset.open = 'false';
+    lb.setAttribute('aria-hidden', 'true');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('button.thumb').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const src = btn.dataset.lightboxSrc ?? '';
+      const cap = btn.dataset.lightboxCaption ?? '';
+      if (src) open(src, cap);
+    });
+  });
+
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.dataset.open === 'true') close();
+  });
+</script>

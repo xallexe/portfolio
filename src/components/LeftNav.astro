@@ -1,0 +1,45 @@
+---
+import type { Lang } from '~/lib/i18n';
+import { ui, pathFor, localized } from '~/lib/i18n';
+import { projects, site } from '~/lib/projects';
+
+interface Props {
+  lang: Lang;
+  current?: 'home' | 'contact' | string;
+}
+
+const { lang, current } = Astro.props;
+const homePath = pathFor(lang, '/');
+const contactPath = pathFor(lang, '/contact');
+
+const currentPath = Astro.url.pathname;
+const stripped = currentPath.replace(/^\/en\/?/, '/');
+const nlPath = stripped === '' ? '/' : stripped;
+const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
+---
+
+<aside class="leftnav">
+  <div class="artist">{site.artist}</div>
+
+  <nav>
+    <a href={homePath} class={current === 'home' ? 'active' : ''}>{ui[lang].home}</a>
+    <a href={contactPath} class={current === 'contact' ? 'active' : ''}>{ui[lang].contact}</a>
+
+    <div class="section-label">— {ui[lang].work}</div>
+    {[...projects].sort((a, b) => a.order - b.order).map((p) => (
+      <a
+        href={pathFor(lang, `/work/${p.id}`)}
+        class={current === p.id ? 'active' : ''}
+        data-project={p.id}
+      >
+        {localized(lang, p.name, p.name_en)}
+      </a>
+    ))}
+  </nav>
+
+  <div class="lang-switch">
+    <a href={nlPath} class={lang === 'nl' ? 'active' : ''}>NL</a>
+    <span>/</span>
+    <a href={enPath} class={lang === 'en' ? 'active' : ''}>EN</a>
+  </div>
+</aside>

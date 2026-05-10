@@ -1,0 +1,61 @@
+---
+import Base from '~/layouts/Base.astro';
+import LeftNav from '~/components/LeftNav.astro';
+import PhotoCard from '~/components/PhotoCard.astro';
+import Lightbox from '~/components/Lightbox.astro';
+import { projects, columnFor } from '~/lib/projects';
+
+const lang = 'en' as const;
+
+const sorted = [...projects].sort((a, b) => a.order - b.order);
+const photosA = sorted.filter((p) => columnFor(p) === 'a').flatMap((p) => p.photos);
+const photosB = sorted.filter((p) => columnFor(p) === 'b').flatMap((p) => p.photos);
+---
+
+<Base lang={lang}>
+  <div class="layout">
+    <LeftNav lang={lang} current="home" />
+
+    <main class="photos">
+      <div class="col" id="col-a">
+        {photosA.map((entry) => <PhotoCard entry={entry} lang={lang} />)}
+      </div>
+
+      <div class="col" id="col-b">
+        {photosB.map((entry) => <PhotoCard entry={entry} lang={lang} />)}
+      </div>
+    </main>
+  </div>
+
+  <Lightbox lang={lang} />
+</Base>
+
+<script>
+  const colA = document.getElementById('col-a');
+  const colB = document.getElementById('col-b');
+
+  function scrollToRandomPhoto(col: HTMLElement) {
+    const photos = col.querySelectorAll<HTMLElement>('.photo');
+    if (photos.length === 0) return;
+    const pick = photos[Math.floor(Math.random() * photos.length)];
+    col.scrollTo({ top: pick.offsetTop });
+  }
+
+  function randomOverview() {
+    if (!colA || !colB) return;
+    scrollToRandomPhoto(colA);
+    scrollToRandomPhoto(colB);
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('.leftnav nav a[href="/en/"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.replaceState(null, '', '/en/');
+      randomOverview();
+    });
+  });
+
+  window.addEventListener('load', () => {
+    randomOverview();
+  });
+</script>

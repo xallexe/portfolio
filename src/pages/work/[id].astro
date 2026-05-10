@@ -1,0 +1,70 @@
+---
+import Base from '~/layouts/Base.astro';
+import LeftNav from '~/components/LeftNav.astro';
+import PhotoCard from '~/components/PhotoCard.astro';
+import Lightbox from '~/components/Lightbox.astro';
+import { localized, ui, pathFor } from '~/lib/i18n';
+import { type Project } from '~/lib/projects';
+
+export async function getStaticPaths() {
+  const { projects } = await import('~/lib/projects');
+  return projects.map((p) => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+interface Props { project: Project }
+
+const { project } = Astro.props;
+const lang = 'nl' as const;
+
+const name = localized(lang, project.name, project.name_en);
+const title = localized(lang, project.title, project.title_en);
+const medium = localized(lang, project.medium, project.medium_en);
+const klant = project.klant?.trim() ?? '';
+const info = localized(lang, project.info, project.info_en);
+---
+
+<Base lang={lang} title={name}>
+  <div class="layout layout--detail">
+    <LeftNav lang={lang} current={project.id} />
+
+    <main class="photos-h" id="photos-h">
+      {project.photos.map((entry) => (
+        <PhotoCard entry={entry} lang={lang} variant="horizontal" />
+      ))}
+    </main>
+
+    <aside class="details">
+      <h1>{name}</h1>
+      <dl class="meta">
+        {title && <><dt>titel</dt><dd>{title}</dd></>}
+        {medium && <><dt>medium</dt><dd>{medium}</dd></>}
+        {klant && <><dt>klant</dt><dd>{klant}</dd></>}
+      </dl>
+      {info && <p class="info">{info}</p>}
+      <a class="back" href={pathFor(lang, '/')}>← {ui[lang].backToWork}</a>
+    </aside>
+  </div>
+
+  <Lightbox lang={lang} />
+</Base>
+
+<script>
+  // Map vertical wheel scrolling to horizontal scroll on the photo strip,
+  // so you can browse with a normal mousewheel without holding Shift.
+  const strip = document.getElementById('photos-h');
+  if (strip) {
+    strip.addEventListener(
+      'wheel',
+      (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          // deltaMode 0 = pixels (trackpad / smooth wheel) — modest multiplier.
+          // deltaMode 1 = lines (classic mouse wheel) — much larger jump per notch.
+          const mult = e.deltaMode === 0 ? 3 : 60;
+          strip.scrollBy({ left: e.deltaY * mult, behavior: 'auto' });
+        }
+      },
+      { passive: false }
+    );
+  }
+</script>
