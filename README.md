@@ -4,15 +4,15 @@ Custom Astro static site, content managed via Decap CMS, deployed on Netlify.
 
 ## Stack
 
-- **Framework:** [Astro 5](https://astro.build) (statisch, geen server-runtime)
-- **Content:** YAML in `data/`, foto's in `public/uploads/photos/`
-- **CMS:** [Decap CMS](https://decapcms.org) op `/admin` (Netlify Identity + Git Gateway)
-- **Hosting:** Netlify (auto-build op elke `main` push)
-- **i18n:** NL default, EN op `/en/`
+- **Framework:** [Astro 5](https://astro.build) (static, no server runtime)
+- **Content:** YAML in `data/`, photos in `public/uploads/photos/`
+- **CMS:** [Decap CMS](https://decapcms.org) at `/admin` (Netlify Identity + Git Gateway)
+- **Hosting:** Netlify (auto-build on every `main` push)
+- **i18n:** Dutch default, English at `/en/`
 
-## Lokaal draaien
+## Run locally
 
-Vereist Node 20+.
+Requires Node 20+.
 
 ```bash
 npm install
@@ -20,99 +20,100 @@ npm run dev
 # → http://localhost:4321
 ```
 
-Andere commands:
+Other commands:
 
 ```bash
 npm run build      # generate dist/
 npm run preview    # serve dist/ locally
 ```
 
-## Project-structuur
+## Project structure
 
 ```
 data/
-  site.yml                 — artiestnaam, email, social links
-  projects/<id>.yml        — één file per project (managed door CMS)
+  site.yml                 — artist name, email, social links
+  projects/<id>.yml        — one file per project (managed by CMS)
 public/
-  admin/                   — Decap CMS UI (geserved op /admin)
-  uploads/photos/          — foto's (uploaded via CMS of manueel)
+  admin/                   — Decap CMS UI (served at /admin)
+  uploads/photos/          — photos (uploaded via CMS or manually)
 src/
   pages/
-    index.astro            — NL home (twee-koloms foto-overzicht)
+    index.astro            — NL home (two-column photo overview)
     en/index.astro         — EN home
-    work/[id].astro        — NL project-detail (horizontale foto-strip)
-    en/work/[id].astro     — EN project-detail
+    work/[id].astro        — NL project detail (horizontal photo strip)
+    en/work/[id].astro     — EN project detail
     contact.astro          — contact page
   components/
-    LeftNav.astro          — vaste linker-navigatie
-    PhotoCard.astro        — wrapper rond elke foto + lightbox-trigger
-    Lightbox.astro         — fullscreen foto overlay
-    ProjectHeader.astro    — (legacy, niet langer in home gebruikt)
-  layouts/Base.astro       — HTML-shell + Typekit-cursor injectie
+    LeftNav.astro          — fixed left navigation
+    PhotoCard.astro        — wrapper around each photo + lightbox trigger
+    Lightbox.astro         — fullscreen photo overlay
+    ProjectHeader.astro    — (legacy, no longer used on home)
+  layouts/Base.astro       — HTML shell + Typekit cursor injection
   lib/
-    projects.ts            — laadt site.yml + projects/*.yml at build time
-    i18n.ts                — taal-utilities (localized, pathFor, ui-strings)
-  styles/global.css        — alle styling (boxy minimalistisch zwart-wit)
+    projects.ts            — loads site.yml + projects/*.yml at build time
+    i18n.ts                — language utilities (localized, pathFor, ui-strings)
+  styles/global.css        — all styling (boxy minimalist black-and-white)
 ```
 
-## Hoe content werkt
+## How content works
 
-Elke project-pagina komt van één YAML-bestand in `data/projects/`. De
-**bestandsnaam zonder extensie wordt het project-ID** (gebruikt in URLs:
+Every project page comes from one YAML file in `data/projects/`. The
+**filename without extension becomes the project ID** (used in URLs:
 `/work/<id>`).
 
 Schema per project:
 
 ```yaml
-order: 1                   # bepaalt kolom op home: oneven=links, even=rechts
-name: "Project naam"        # NL versie, verschijnt in nav
-name_en: ""                 # optioneel; valt terug op NL als leeg
-title: ""                   # optioneel
+order: 1                   # determines column on home: odd=left, even=right
+name: "Project name"        # NL version, appears in nav
+name_en: ""                 # optional; falls back to NL if empty
+title: ""                   # optional
 title_en: ""
-medium: ""                  # bv. "fotografie", "print"
+medium: ""                  # e.g. "photography", "print"
 medium_en: ""
-klant: ""                   # opdrachtgever; leeg = persoonlijk werk
-info: ""                    # markdown; toont in details-panel op /work/<id>
+klant: ""                   # client; empty = personal work
+info: ""                    # markdown; shown in details panel on /work/<id>
 info_en: ""
-column: ""                  # "" (auto), "a" (links), of "b" (rechts) override
+column: ""                  # "" (auto), "a" (left), or "b" (right) override
 photos:
   - file: "/uploads/photos/foo.jpg"
-    info: ""                 # caption per foto (optioneel)
+    info: ""                 # per-photo caption (optional)
     info_en: ""
 ```
 
-Site-brede instellingen (artiestnaam, email, social) staan in `data/site.yml`.
+Site-wide settings (artist name, email, socials) live in `data/site.yml`.
 
-## Hoe de admin werkt
+## How the admin works
 
-Editor opent `<site>/admin`, logt in met **Netlify Identity** (email +
-wachtwoord, geen GitHub-account nodig), bewerkt content via formulieren,
-klikt save. Decap commit naar de repo via **Netlify Git Gateway**.
-Netlify ziet de commit en herbouwt — wijzigingen zijn ~30s later live.
+The editor opens `<site>/admin`, logs in via **Netlify Identity** (email +
+password, or "Continue with GitHub" if external provider is enabled — no
+GitHub account strictly required), edits content through forms, and hits
+save. Decap commits to the repo via **Netlify Git Gateway**. Netlify
+sees the commit and rebuilds — changes are live ~30s later.
 
 ## Deploy
 
-`git push origin main` → Netlify detecteert change → `npm run build` →
-publishen vanuit `dist/`.
+`git push origin main` → Netlify detects the change → `npm run build` →
+publishes from `dist/`.
 
-Geen aparte CI nodig. Build duurt ~1 min voor 33 foto's.
+No separate CI needed. Build takes ~1 min for 33 photos.
 
-## Wijzigingen aan layout / design
+## Changes to layout / design
 
-Alleen via code. Belangrijke files:
+Code only. Key files:
 
-- `src/styles/global.css` — alle styling
-- `src/pages/index.astro` — home-pagina logica (random scroll, kolom-distributie)
-- `src/pages/work/[id].astro` — detail-pagina (horizontale scroll, wheel-mapping)
-- `src/layouts/Base.astro` — Typekit-cursor + layout-shell
+- `src/styles/global.css` — all styling
+- `src/pages/index.astro` — home-page logic (random scroll, column distribution)
+- `src/pages/work/[id].astro` — detail page (horizontal scroll, wheel mapping)
+- `src/layouts/Base.astro` — Typekit cursor + layout shell
 
-Cursor gebruikt het glyph van de letter `q` in `blockhead-illust-ot`
-(Adobe Fonts via Typekit, kit `qyw6yte`). Wijzigen in `Base.astro` regel
-~20-22.
+The cursor uses the glyph of the letter `q` in `blockhead-illust-ot`
+(Adobe Fonts via Typekit, kit `qyw6yte`). Change it in `Base.astro`
+around lines 20-22.
 
-## Onderhoud
+## Maintenance
 
-- `npm update` periodiek (of via Renovate/Dependabot — TODO)
-- Astro major-versions: lees release notes voor breaking changes
-- Adobe Fonts subscription moet actief blijven voor de cursor; valt terug
-  op default als Typekit faalt te laden
+- `npm update` periodically (or set up Renovate/Dependabot — TODO)
+- Astro major versions: read the release notes for breaking changes
+- The Adobe Fonts subscription must stay active for the cursor to load;
+  it falls back to the default cursor if Typekit fails to load
