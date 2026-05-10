@@ -4,15 +4,24 @@ import LeftNav from '~/components/LeftNav.astro';
 import PhotoCard from '~/components/PhotoCard.astro';
 import Lightbox from '~/components/Lightbox.astro';
 import { projects, columnFor } from '~/lib/projects';
+import { pathFor } from '~/lib/i18n';
 
 const lang = 'nl' as const;
 
-// Photos still grouped by project under the hood (column derived from `order`
-// parity, with `column` override). Headers are hidden — visitor sees a clean
-// photo grid without project boundaries.
+// Flatten photos but keep each one's owning project so we can deep-link
+// from home → detail page with that photo focused via #p<idx>.
 const sorted = [...projects].sort((a, b) => a.order - b.order);
-const photosA = sorted.filter((p) => columnFor(p) === 'a').flatMap((p) => p.photos);
-const photosB = sorted.filter((p) => columnFor(p) === 'b').flatMap((p) => p.photos);
+const flatten = (col: 'a' | 'b') =>
+  sorted
+    .filter((p) => columnFor(p) === col)
+    .flatMap((p) =>
+      p.photos.map((entry, idx) => ({
+        entry,
+        href: pathFor(lang, `/work/${p.id}#p${idx}`),
+      }))
+    );
+const photosA = flatten('a');
+const photosB = flatten('b');
 ---
 
 <Base lang={lang}>
@@ -21,11 +30,11 @@ const photosB = sorted.filter((p) => columnFor(p) === 'b').flatMap((p) => p.phot
 
     <main class="photos">
       <div class="col" id="col-a">
-        {photosA.map((entry) => <PhotoCard entry={entry} lang={lang} />)}
+        {photosA.map((p) => <PhotoCard entry={p.entry} lang={lang} linkTo={p.href} />)}
       </div>
 
       <div class="col" id="col-b">
-        {photosB.map((entry) => <PhotoCard entry={entry} lang={lang} />)}
+        {photosB.map((p) => <PhotoCard entry={p.entry} lang={lang} linkTo={p.href} />)}
       </div>
     </main>
   </div>

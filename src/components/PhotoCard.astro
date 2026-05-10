@@ -8,24 +8,34 @@ interface Props {
   lang: Lang;
   /** 'vertical' (home: stacked column) or 'horizontal' (detail: side-by-side row). */
   variant?: 'vertical' | 'horizontal';
+  /** If set, photo is a link to this URL instead of a lightbox-trigger. */
+  linkTo?: string;
+  /** Optional DOM id (used for hash-based deep-linking on detail pages). */
+  id?: string;
 }
 
-const { entry, lang, variant = 'vertical' } = Astro.props;
+const { entry, lang, variant = 'vertical', linkTo, id } = Astro.props;
 const caption = localized(lang, entry.info, entry.info_en);
 const wrapClass = variant === 'horizontal' ? 'photo-h' : 'photo';
 const src = entry.file;
 const alt = caption || src.split('/').pop() || '';
 ---
 
-<figure class={wrapClass}>
-  <button
-    type="button"
-    class="thumb"
-    data-lightbox-src={src}
-    data-lightbox-caption={caption}
-    aria-label={alt}
-  >
-    <img src={src} alt={alt} loading="lazy" decoding="async" />
-  </button>
+<figure class={wrapClass} id={id}>
+  {linkTo ? (
+    <a class="thumb" href={linkTo} aria-label={alt}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+    </a>
+  ) : (
+    <button
+      type="button"
+      class="thumb"
+      data-lightbox-src={src}
+      data-lightbox-caption={caption}
+      aria-label={alt}
+    >
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+    </button>
+  )}
   {caption && variant === 'vertical' && <figcaption class="caption">{caption}</figcaption>}
 </figure>

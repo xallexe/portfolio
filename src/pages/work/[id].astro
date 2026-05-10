@@ -1,4 +1,5 @@
 ---
+import { marked } from 'marked';
 import Base from '~/layouts/Base.astro';
 import LeftNav from '~/components/LeftNav.astro';
 import PhotoCard from '~/components/PhotoCard.astro';
@@ -21,6 +22,7 @@ const title = localized(lang, project.title, project.title_en);
 const medium = localized(lang, project.medium, project.medium_en);
 const klant = project.klant?.trim() ?? '';
 const info = localized(lang, project.info, project.info_en);
+const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
 ---
 
 <Base lang={lang} title={name}>
@@ -28,8 +30,8 @@ const info = localized(lang, project.info, project.info_en);
     <LeftNav lang={lang} current={project.id} />
 
     <main class="photos-h" id="photos-h">
-      {project.photos.map((entry) => (
-        <PhotoCard entry={entry} lang={lang} variant="horizontal" />
+      {project.photos.map((entry, idx) => (
+        <PhotoCard entry={entry} lang={lang} variant="horizontal" id={`p${idx}`} />
       ))}
     </main>
 
@@ -40,7 +42,7 @@ const info = localized(lang, project.info, project.info_en);
         {medium && <><dt>medium</dt><dd>{medium}</dd></>}
         {klant && <><dt>klant</dt><dd>{klant}</dd></>}
       </dl>
-      {info && <p class="info">{info}</p>}
+      {infoHtml && <div class="info" set:html={infoHtml} />}
       <a class="back" href={pathFor(lang, '/')}>← {ui[lang].backToWork}</a>
     </aside>
   </div>
@@ -49,10 +51,10 @@ const info = localized(lang, project.info, project.info_en);
 </Base>
 
 <script>
-  // Map vertical wheel scrolling to horizontal scroll on the photo strip,
-  // so you can browse with a normal mousewheel without holding Shift.
   const strip = document.getElementById('photos-h');
   if (strip) {
+    // Map vertical wheel scrolling to horizontal scroll on the photo strip,
+    // so you can browse with a normal mousewheel without holding Shift.
     strip.addEventListener(
       'wheel',
       (e) => {
@@ -66,5 +68,17 @@ const info = localized(lang, project.info, project.info_en);
       },
       { passive: false }
     );
+
+    // Deep-link from home: /work/<id>#p<idx> scrolls that photo into view.
+    function scrollToHash() {
+      const hash = window.location.hash.replace('#', '');
+      if (!hash) return;
+      const target = strip!.querySelector<HTMLElement>(`#${CSS.escape(hash)}`);
+      if (target) {
+        strip!.scrollTo({ left: target.offsetLeft, behavior: 'auto' });
+      }
+    }
+    if (document.readyState === 'complete') scrollToHash();
+    else window.addEventListener('load', scrollToHash);
   }
 </script>
