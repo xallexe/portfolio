@@ -1,0 +1,124 @@
+# Decap CMS configuration.
+# Reachable at <site>/admin after Netlify Identity + Git Gateway are enabled.
+#
+# Backend: Netlify Git Gateway commits to the connected GitHub repo on
+# behalf of the editor. The editor never logs into GitHub directly.
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Where Decap stores uploaded photos in the repo.
+media_folder: "public/uploads/photos"
+# What URL prefix to use when referencing those photos in YAML/HTML.
+public_folder: "/uploads/photos"
+
+# Editor UI labels (Dutch + English mix; collection labels are what
+# Axelle will actually see in the sidebar).
+locale: en
+
+collections:
+  # ── Site-wide settings: artist info, contact, social links ──────────
+  - name: site
+    label: "Site"
+    files:
+      - file: "data/site.yml"
+        name: site_settings
+        label: "Site instellingen"
+        fields:
+          - { label: "Artiestnaam", name: "artist", widget: "string" }
+          - { label: "Email (publiek contact)", name: "email", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Behance URL", name: "behance", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+          - { label: "Eigen website URL", name: "website", widget: "string", required: false }
+
+  # ── Projects: one YAML file per project, automatically listed ───────
+  - name: projects
+    label: "Projecten"
+    label_singular: "Project"
+    folder: "data/projects"
+    extension: "yml"
+    format: "yml"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{name}}"
+    sortable_fields: ["order", "name"]
+    fields:
+      - label: "Volgorde (bepaalt kolom: oneven=links, even=rechts)"
+        name: "order"
+        widget: "number"
+        value_type: "int"
+        min: 1
+
+      - label: "Naam (kort label in zijbalk)"
+        name: "name"
+        widget: "string"
+
+      - label: "Naam — Engels (optioneel, valt terug op NL)"
+        name: "name_en"
+        widget: "string"
+        required: false
+
+      - label: "Titel"
+        name: "title"
+        widget: "string"
+        required: false
+
+      - label: "Titel — Engels"
+        name: "title_en"
+        widget: "string"
+        required: false
+
+      - label: "Medium (bv. fotografie, print, mixed media)"
+        name: "medium"
+        widget: "string"
+        required: false
+
+      - label: "Medium — Engels"
+        name: "medium_en"
+        widget: "string"
+        required: false
+
+      - label: "Klant / opdrachtgever (leeg = persoonlijk werk)"
+        name: "klant"
+        widget: "string"
+        required: false
+
+      - label: "Info / omschrijving (markdown — bold/italic/links)"
+        name: "info"
+        widget: "markdown"
+        required: false
+
+      - label: "Info — Engels"
+        name: "info_en"
+        widget: "markdown"
+        required: false
+
+      - label: "Kolom-override (laat leeg voor automatisch)"
+        name: "column"
+        widget: "select"
+        options:
+          - { label: "Automatisch (op basis van volgorde)", value: "" }
+          - { label: "Forceer linkerkolom", value: "a" }
+          - { label: "Forceer rechterkolom", value: "b" }
+        default: ""
+        required: false
+
+      - label: "Foto's"
+        name: "photos"
+        widget: "list"
+        summary: "{{fields.file}}"
+        fields:
+          - label: "Afbeelding"
+            name: "file"
+            widget: "image"
+          - label: "Caption (optioneel)"
+            name: "info"
+            widget: "string"
+            required: false
+          - label: "Caption — Engels"
+            name: "info_en"
+            widget: "string"
+            required: false

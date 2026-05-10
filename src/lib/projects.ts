@@ -1,12 +1,13 @@
 import yaml from 'js-yaml';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const yamlPath = resolve(here, '../../data/projects.yaml');
+const dataDir = resolve(here, '../../data');
 
 export interface PhotoEntry {
+  /** Public URL relative to the site root, e.g. "/uploads/photos/foo.jpg". */
   file: string;
   info?: string;
   info_en?: string;
@@ -15,12 +16,12 @@ export interface PhotoEntry {
 export type Column = 'a' | 'b';
 
 export interface Project {
+  /** Internal identifier (matches the YAML filename without extension). */
   id: string;
-  /** Underlying ordinal. Drives column placement: odd → 'a' (left), even → 'b' (right).
-   *  Stays constant even if `name` changes. */
+  /** Underlying ordinal. Drives column placement: odd → 'a' (left), even → 'b' (right). */
   order: number;
   /** Optional override. When set, forces the project into this column regardless of `order`. */
-  column?: Column;
+  column?: Column | '';
   name: string;
   name_en?: string;
   title?: string;
@@ -36,23 +37,29 @@ export interface Project {
 export interface SiteConfig {
   artist: string;
   email: string;
+  instagram?: string;
+  behance?: string;
+  linkedin?: string;
+  website?: string;
 }
 
-interface RawData {
-  site: SiteConfig;
-  projects: Project[];
-}
+const siteRaw = yaml.load(readFileSync(join(dataDir, 'site.yml'), 'utf8')) as SiteConfig;
 
-const raw = yaml.load(readFileSync(yamlPath, 'utf8')) as RawData;
+const projectsDir = join(dataDir, 'projects');
+const projectFiles = readdirSync(projectsDir).filter((f) => f.endsWith('.yml'));
 
-// Fallback: if a project lacks an `order`, assign one based on its index in the YAML.
-const projectsWithOrder: Project[] = raw.projects.map((p, i) => ({
-  ...p,
-  order: typeof p.order === 'number' ? p.order : i + 1,
-}));
+const projectsRaw: Project[] = projectFiles.map((filename, i) => {
+  const id = filename.replace(/\.yml$/, '');
+  const data = yaml.load(readFileSync(join(projectsDir, filename), 'utf8')) as Omit<Project, 'id'>;
+  return {
+    id,
+    ...data,
+    order: typeof data.order === 'number' ? data.order : i + 1,
+  };
+});
 
-export const site: SiteConfig = raw.site;
-export const projects: Project[] = projectsWithOrder;
+export const site: SiteConfig = siteRaw;
+export const projects: Project[] = projectsRaw;
 
 /** Resolves the column for a project: explicit `column` override beats parity of `order`. */
 export function columnFor(p: Project): Column {

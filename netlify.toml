@@ -1,0 +1,31 @@
+# Netlify build + deploy configuration.
+# Most settings are auto-detected for Astro; this file pins versions and
+# adds caching headers for the static photo uploads.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Long-cache uploaded photos (filenames are stable; CMS overwrites use
+# new filenames so cache invalidation is not an issue).
+[[headers]]
+  for = "/uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Default security headers for the rest of the site.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Decap CMS is a SPA at /admin/ — serve index.html for any sub-route.
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
