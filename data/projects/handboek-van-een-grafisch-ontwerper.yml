@@ -1,0 +1,21 @@
+order: 2
+name: handboek
+title: handboek van een grafisch ontwerper
+medium: print
+klant: bruikleen publicaties
+info: een handboek van een grafisch ontwerper is een boek met al de afbeeldingen
+  uit mijn fotogalerij, die een hand en een boek tonen. deze foto’s zijn
+  voornamelijk getrokken tijdens mijn studie, grafisch ontwerp. ik hoop dat vele
+  grafisch ontwerpers zichzelf en hun galerij kunnen herkennen. hopelijk hebben
+  de lezers een kleine glimlach bij het bekijken van dit boek.
+column: ""
+photos:
+  - file: /uploads/photos/fotoshandboekinstagra-03.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-02.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-01.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-09.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-08.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-07.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-06.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-05.jpg
+  - file: /uploads/photos/fotoshandboekinstagra-04.jpg
