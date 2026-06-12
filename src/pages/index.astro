@@ -101,8 +101,8 @@ const photosB = allPhotos.slice(half);
     link.addEventListener('click', () => saveScrollState());
   });
 
-  // Clicking Home while already on home explicitly means "shuffle" — drop saved state.
-  document.querySelectorAll<HTMLAnchorElement>('.leftnav nav a[href="/"]').forEach((link) => {
+  // Clicking the artist link (= home) while already on home explicitly means "shuffle".
+  document.querySelectorAll<HTMLAnchorElement>('.leftnav a.artist').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       history.replaceState(null, '', '/');

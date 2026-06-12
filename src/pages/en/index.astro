@@ -95,7 +95,7 @@ const photosB = allPhotos.slice(half);
     link.addEventListener('click', () => saveScrollState());
   });
 
-  document.querySelectorAll<HTMLAnchorElement>('.leftnav nav a[href="/en/"]').forEach((link) => {
+  document.querySelectorAll<HTMLAnchorElement>('.leftnav a.artist').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       history.replaceState(null, '', '/en/');
