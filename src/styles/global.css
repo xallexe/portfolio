@@ -146,13 +146,15 @@ button {
   scroll-behavior: smooth;
 }
 
-/* Photos: no frame, just whitespace; thin black line between consecutive photos. */
+/* Photos: no frame, just whitespace. */
 .photo {
   margin: 0;
   padding: var(--gap-photo) 0;
 }
 
-.photo + .photo {
+/* Thin black line between consecutive photos in the detail-page strip. */
+/* Home columns intentionally have no separator. */
+.photos-h .photo + .photo {
   border-top: 1px solid var(--line);
 }
 
