@@ -19,7 +19,7 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
 ---
 
 <aside class="leftnav">
-  <div class="artist">{site.artist}</div>
+  <a class="artist" href={homePath}>{site.artist}</a>
 
   <nav>
     <a href={homePath} class={current === 'home' ? 'active' : ''}>{ui[lang].home}</a>
