@@ -6,17 +6,10 @@ klant: ""
 info: ""
 column: ""
 photos:
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_1.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_2.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_3.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_5.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6_1.JPG
-    info: ""
-  - file: /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_7.JPG
-    info: ""
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_1.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_2.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_3.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_5.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_6_1.JPG
+  - /uploads/photos/AXELLE.HOSTYN_BROADSHEETSFEERBEELD_7.JPG

@@ -48,13 +48,22 @@ const siteRaw = yaml.load(readFileSync(join(dataDir, 'site.yml'), 'utf8')) as Si
 const projectsDir = join(dataDir, 'projects');
 const projectFiles = readdirSync(projectsDir).filter((f) => f.endsWith('.yml'));
 
+type RawPhoto = string | PhotoEntry;
+
+function normalizePhoto(raw: RawPhoto): PhotoEntry {
+  return typeof raw === 'string' ? { file: raw } : raw;
+}
+
 const projectsRaw: Project[] = projectFiles.map((filename, i) => {
   const id = filename.replace(/\.yml$/, '');
-  const data = yaml.load(readFileSync(join(projectsDir, filename), 'utf8')) as Omit<Project, 'id'>;
+  const data = yaml.load(readFileSync(join(projectsDir, filename), 'utf8')) as Omit<Project, 'id' | 'photos'> & {
+    photos?: RawPhoto[];
+  };
   return {
     id,
     ...data,
     order: typeof data.order === 'number' ? data.order : i + 1,
+    photos: (data.photos ?? []).map(normalizePhoto),
   };
 });
 

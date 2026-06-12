@@ -3,25 +3,24 @@ import Base from '~/layouts/Base.astro';
 import LeftNav from '~/components/LeftNav.astro';
 import PhotoCard from '~/components/PhotoCard.astro';
 import Lightbox from '~/components/Lightbox.astro';
-import { projects, columnFor } from '~/lib/projects';
+import { projects } from '~/lib/projects';
 import { pathFor } from '~/lib/i18n';
 
 const lang = 'nl' as const;
 
-// Flatten photos but keep each one's owning project so we can deep-link
-// from home → detail page with that photo focused via #p<idx>.
-const sorted = [...projects].sort((a, b) => a.order - b.order);
-const flatten = (col: 'a' | 'b') =>
-  sorted
-    .filter((p) => columnFor(p) === col)
-    .flatMap((p) =>
-      p.photos.map((entry, idx) => ({
-        entry,
-        href: pathFor(lang, `/work/${p.id}#p${idx}`),
-      }))
-    );
-const photosA = flatten('a');
-const photosB = flatten('b');
+// Flatten every photo across every project. The home page no longer
+// groups photos by project; client-side JS shuffles them on load and
+// each click deep-links via #p<idx> to the photo on its project page.
+const allPhotos = projects.flatMap((p) =>
+  p.photos.map((entry, idx) => ({
+    entry,
+    href: pathFor(lang, `/work/${p.id}#p${idx}`),
+  }))
+);
+
+const half = Math.ceil(allPhotos.length / 2);
+const photosA = allPhotos.slice(0, half);
+const photosB = allPhotos.slice(half);
 ---
 
 <Base lang={lang}>
@@ -48,6 +47,22 @@ const photosB = flatten('b');
 
   // SessionStorage key — survives detail→back navigation but resets on tab close.
   const STORAGE_KEY = 'home-scroll-nl';
+
+  function shuffle(col: HTMLElement) {
+    const items = Array.from(col.children) as HTMLElement[];
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    // appendChild on an already-attached node moves it — re-attach in new order.
+    items.forEach((item) => col.appendChild(item));
+  }
+
+  function shuffleAll() {
+    if (!colA || !colB) return;
+    shuffle(colA);
+    shuffle(colB);
+  }
 
   function scrollToRandomPhoto(col: HTMLElement) {
     const photos = col.querySelectorAll<HTMLElement>('.photo');
@@ -92,11 +107,16 @@ const photosB = flatten('b');
       e.preventDefault();
       history.replaceState(null, '', '/');
       sessionStorage.removeItem(STORAGE_KEY);
+      shuffleAll();
       randomOverview();
     });
   });
 
   window.addEventListener('load', () => {
-    if (!restoreScrollState()) randomOverview();
+    // Restore-scroll wins: same photos in same DOM order so the saved
+    // scrollTop lands on the same image. Otherwise: fresh shuffle.
+    if (restoreScrollState()) return;
+    shuffleAll();
+    randomOverview();
   });
 </script>

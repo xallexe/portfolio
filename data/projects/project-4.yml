@@ -1,14 +1,11 @@
 order: 4
-name: "Project 4"
+name: Project 4
 title: ""
 medium: ""
 klant: ""
 info: ""
 column: ""
 photos:
-  - file: "/uploads/photos/Axelle-02.jpg"
-    info: ""
-  - file: "/uploads/photos/Axelle-03.jpg"
-    info: ""
-  - file: "/uploads/photos/Axelle-06.jpg"
-    info: ""
+  - /uploads/photos/Axelle-02.jpg
+  - /uploads/photos/Axelle-03.jpg
+  - /uploads/photos/Axelle-06.jpg

@@ -3,23 +3,21 @@ import Base from '~/layouts/Base.astro';
 import LeftNav from '~/components/LeftNav.astro';
 import PhotoCard from '~/components/PhotoCard.astro';
 import Lightbox from '~/components/Lightbox.astro';
-import { projects, columnFor } from '~/lib/projects';
+import { projects } from '~/lib/projects';
 import { pathFor } from '~/lib/i18n';
 
 const lang = 'en' as const;
 
-const sorted = [...projects].sort((a, b) => a.order - b.order);
-const flatten = (col: 'a' | 'b') =>
-  sorted
-    .filter((p) => columnFor(p) === col)
-    .flatMap((p) =>
-      p.photos.map((entry, idx) => ({
-        entry,
-        href: pathFor(lang, `/work/${p.id}#p${idx}`),
-      }))
-    );
-const photosA = flatten('a');
-const photosB = flatten('b');
+const allPhotos = projects.flatMap((p) =>
+  p.photos.map((entry, idx) => ({
+    entry,
+    href: pathFor(lang, `/work/${p.id}#p${idx}`),
+  }))
+);
+
+const half = Math.ceil(allPhotos.length / 2);
+const photosA = allPhotos.slice(0, half);
+const photosB = allPhotos.slice(half);
 ---
 
 <Base lang={lang}>
@@ -45,6 +43,21 @@ const photosB = flatten('b');
   const colB = document.getElementById('col-b');
 
   const STORAGE_KEY = 'home-scroll-en';
+
+  function shuffle(col: HTMLElement) {
+    const items = Array.from(col.children) as HTMLElement[];
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    items.forEach((item) => col.appendChild(item));
+  }
+
+  function shuffleAll() {
+    if (!colA || !colB) return;
+    shuffle(colA);
+    shuffle(colB);
+  }
 
   function scrollToRandomPhoto(col: HTMLElement) {
     const photos = col.querySelectorAll<HTMLElement>('.photo');
@@ -87,11 +100,14 @@ const photosB = flatten('b');
       e.preventDefault();
       history.replaceState(null, '', '/en/');
       sessionStorage.removeItem(STORAGE_KEY);
+      shuffleAll();
       randomOverview();
     });
   });
 
   window.addEventListener('load', () => {
-    if (!restoreScrollState()) randomOverview();
+    if (restoreScrollState()) return;
+    shuffleAll();
+    randomOverview();
   });
 </script>

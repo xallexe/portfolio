@@ -1,24 +1,16 @@
 order: 3
-name: "Project 3"
+name: Project 3
 title: ""
 medium: ""
 klant: ""
 info: ""
 column: ""
 photos:
-  - file: "/uploads/photos/IMG_0915.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0918.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0933.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0939.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0940.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0945.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0946.JPG"
-    info: ""
-  - file: "/uploads/photos/IMG_0947.JPG"
-    info: ""
+  - /uploads/photos/IMG_0915.JPG
+  - /uploads/photos/IMG_0918.JPG
+  - /uploads/photos/IMG_0933.JPG
+  - /uploads/photos/IMG_0939.JPG
+  - /uploads/photos/IMG_0940.JPG
+  - /uploads/photos/IMG_0945.JPG
+  - /uploads/photos/IMG_0946.JPG
+  - /uploads/photos/IMG_0947.JPG

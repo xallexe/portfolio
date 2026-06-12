@@ -8,6 +8,11 @@ backend:
   name: git-gateway
   branch: main
 
+# Editorial workflow: every "Publish" becomes a draft PR first.
+# Axelle moves entries through Draft → In Review → Ready → Publish
+# from the Workflow tab in the CMS sidebar.
+publish_mode: editorial_workflow
+
 # Where Decap stores uploaded photos in the repo.
 media_folder: "public/uploads/photos"
 # What URL prefix to use when referencing those photos in YAML/HTML.
@@ -109,16 +114,13 @@ collections:
       - label: "Foto's"
         name: "photos"
         widget: "list"
-        summary: "{{fields.file}}"
-        fields:
-          - label: "Afbeelding"
-            name: "file"
-            widget: "image"
-          - label: "Caption (optioneel)"
-            name: "info"
-            widget: "string"
-            required: false
-          - label: "Caption — Engels"
-            name: "info_en"
-            widget: "string"
-            required: false
+        # `field` (singular) + image widget + media_library.multiple = true
+        # → file picker laat meerdere bestanden ineens selecteren, elk
+        # wordt een aparte list-entry. List-inhoud = strings (pad).
+        field:
+          label: "Afbeelding"
+          name: "file"
+          widget: "image"
+          media_library:
+            config:
+              multiple: true
