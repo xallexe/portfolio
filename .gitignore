@@ -8,6 +8,9 @@ node_modules/
 # Local-only originals (high-res TIFs that we converted to JPG for the web)
 src/assets/_originals_tif/
 
+# Generated webp variants — built by scripts/optimize-images.mjs on every build
+public/uploads/photos/_opt/
+
 # Environment / secrets
 .env
 .env.*
