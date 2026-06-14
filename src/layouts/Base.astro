@@ -20,13 +20,23 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <title>{fullTitle}</title>
     <link rel="preload" href="/fonts/AxellHostyn.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/SilvanaText-Regular.otf" as="font" type="font/otf" crossorigin />
-    <!-- Typekit kit qyw6yte — Axelle's Adobe Fonts account — serves
-         blockhead-illust-ot, the custom illustration font whose 'q' glyph is
-         the cheese-block cursor. Loaded inline in the head so the cursor
-         script below can resolve the font via document.fonts. -->
+    <!-- Typekit kit qyw6yte (Adobe Fonts) serves blockhead-illust-ot —
+         the cheese-block cursor glyph at 'q'. Primary source. -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
     <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css" />
+    <style is:inline>
+      /* Local fallback for blockhead-illust-ot — kicks in only if the Typekit
+         declaration above fails to load (account change, kit deletion, CDN
+         outage). is:inline keeps the @font-face here so the cursor script
+         below can resolve it via document.fonts without waiting on the
+         external global.css. */
+      @font-face {
+        font-family: 'blockhead-illust-ot';
+        src: url('/fonts/blockhead-illust-ot.woff2') format('woff2');
+        font-display: block;
+      }
+    </style>
     <script>
       const CURSOR_CHAR = 'q';
       const CURSOR_FONT = 'blockhead-illust-ot';
