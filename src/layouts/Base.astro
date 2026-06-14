@@ -18,14 +18,14 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css" />
-  </head>
-  <body>
-    <slot />
     <script>
-      // Custom cursor: render the glyph for "q" in blockhead-illust-ot to a
-      // canvas, convert to PNG data URL, apply as cursor on <html>.
-      // Change CURSOR_CHAR if a different glyph in the font is desired.
+      // Cursor runs in <head> right after the Typekit stylesheet so the
+      // font download is kicked off as early as possible. The stylesheet
+      // link blocks this script until parsed, which is exactly what we want
+      // (the @font-face must be registered before fonts.load() works).
       const CURSOR_CHAR = 'q';
       const CURSOR_FONT = 'blockhead-illust-ot';
       const CURSOR_SIZE = 32;
@@ -46,10 +46,8 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
         const url = c.toDataURL('image/png');
         const half = Math.round(CURSOR_SIZE / 2);
         const value = `url('${url}') ${half} ${half}, auto`;
-        // Inject a global rule that overrides the browser's default pointer
-        // cursor on links/buttons so the custom glyph stays visible everywhere.
         const styleId = 'custom-cursor-style';
-        let style = document.getElementById(styleId) as HTMLStyleElement | null;
+        let style = document.getElementById(styleId);
         if (!style) {
           style = document.createElement('style');
           style.id = styleId;
@@ -59,12 +57,13 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
       }
 
       if ('fonts' in document) {
-        document.fonts.load(`${CURSOR_SIZE - 4}px "${CURSOR_FONT}"`).then(() => {
-          applyCursor();
-        }).catch(() => applyCursor());
+        document.fonts.load(`${CURSOR_SIZE - 4}px "${CURSOR_FONT}"`).then(applyCursor).catch(applyCursor);
       } else {
         window.addEventListener('load', applyCursor);
       }
     </script>
+  </head>
+  <body>
+    <slot />
   </body>
 </html>

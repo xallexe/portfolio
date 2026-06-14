@@ -4,18 +4,18 @@ export const ui = {
   nl: {
     home: 'Home',
     contact: 'Contact',
-    work: 'work',
+    work: 'projects',
     close: 'sluiten',
     email: 'email',
-    backToWork: 'terug naar werk',
+    backToWork: 'terug naar projects',
   },
   en: {
     home: 'Home',
     contact: 'Contact',
-    work: 'work',
+    work: 'projects',
     close: 'close',
     email: 'email',
-    backToWork: 'back to work',
+    backToWork: 'back to projects',
   },
 } as const;
 

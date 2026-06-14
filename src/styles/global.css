@@ -100,10 +100,10 @@ button {
 }
 
 .leftnav .section-label {
-  font-size: 0.7rem;
+  font-size: 0.88rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--muted);
+  letter-spacing: 0.1em;
+  color: var(--ink);
   margin: 1rem 0 0.4rem;
 }
 
@@ -116,8 +116,14 @@ button {
   text-decoration: underline;
 }
 
-.leftnav .lang-switch {
+.leftnav .bottom-block {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.leftnav .lang-switch {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -210,10 +216,6 @@ button {
 
 .photo-h:first-child {
   padding-left: 0;
-}
-
-.photo-h + .photo-h {
-  border-left: 1px solid var(--line);
 }
 
 .photo-h .thumb {
