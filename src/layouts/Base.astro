@@ -19,13 +19,13 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <link rel="preload" href="/fonts/AxellHostyn.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/fonts/PPAcma-Semibold.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/fonts/SilvanaText-Regular.otf" as="font" type="font/otf" crossorigin />
     <script>
-      // Cursor uses the PP Acma glyph. Fonts are same-origin via local
+      // Cursor uses the AxellHostyn glyph. Fonts are same-origin via local
       // @font-face so document.fonts.load() resolves quickly once the
       // browser has fetched the file.
       const CURSOR_CHAR = 'q';
-      const CURSOR_FONT = 'PPAcma';
+      const CURSOR_FONT = 'AxellHostyn';
       const CURSOR_SIZE = 32;
 
       function applyCursor() {

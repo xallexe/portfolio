@@ -12,12 +12,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'PPAcma';
-  src: url('/fonts/PPAcma-Semibold.otf') format('opentype');
-  font-display: swap;
-}
-
 :root {
   --ink: #000;
   --paper: #fff;
@@ -102,11 +96,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  font-family: 'PPAcma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'AxellHostyn', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .leftnav .artist {
-  font-family: 'AxellHostyn', 'PPAcma', sans-serif;
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.1;
@@ -259,7 +252,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  font-family: 'PPAcma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'AxellHostyn', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .details h1 {
@@ -338,7 +331,7 @@ button {
   top: 1rem;
   right: 1rem;
   font-size: 0.9rem;
-  font-family: 'PPAcma', sans-serif;
+  font-family: 'AxellHostyn', sans-serif;
 }
 
 /* ── Contact page ─────────────────────────────────────────────────── */
@@ -349,7 +342,7 @@ button {
 }
 
 .contact h1 {
-  font-family: 'PPAcma', sans-serif;
+  font-family: 'AxellHostyn', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
 }
