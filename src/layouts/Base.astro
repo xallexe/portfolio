@@ -20,20 +20,16 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <title>{fullTitle}</title>
     <link rel="preload" href="/fonts/AxellHostyn.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/SilvanaText-Regular.otf" as="font" type="font/otf" crossorigin />
-    <style is:inline>
-      /* is:inline so Astro doesn't hoist this into the external stylesheet.
-         The cursor script below needs AxellHostyn registered in document.fonts
-         before it runs — the external global.css @font-face arrives later in
-         document order and would race the canvas draw. */
-      @font-face {
-        font-family: 'AxellHostyn';
-        src: url('/fonts/AxellHostyn.ttf') format('truetype');
-        font-display: block;
-      }
-    </style>
+    <!-- Typekit kit qyw6yte — Axelle's Adobe Fonts account — serves
+         blockhead-illust-ot, the custom illustration font whose 'q' glyph is
+         the cheese-block cursor. Loaded inline in the head so the cursor
+         script below can resolve the font via document.fonts. -->
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css" />
     <script>
       const CURSOR_CHAR = 'q';
-      const CURSOR_FONT = 'AxellHostyn';
+      const CURSOR_FONT = 'blockhead-illust-ot';
       const CURSOR_SIZE = 32;
       const CURSOR_PX = CURSOR_SIZE - 4;
 
@@ -67,8 +63,11 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
       }
 
       if ('fonts' in document) {
-        document.fonts
-          .load(`${CURSOR_PX}px "${CURSOR_FONT}"`)
+        // ready waits until every CSS-declared font has finished loading or
+        // erroring, so Typekit's @import chain is fully resolved before we
+        // try to use blockhead-illust-ot in the canvas.
+        document.fonts.ready
+          .then(() => document.fonts.load(`${CURSOR_PX}px "${CURSOR_FONT}"`))
           .then(() => requestAnimationFrame(applyCursor))
           .catch(applyCursor);
       } else {
