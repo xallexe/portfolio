@@ -18,16 +18,14 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
-    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
-    <link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css" />
+    <link rel="preload" href="/fonts/AxellHostyn.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/PPAcma-Semibold.otf" as="font" type="font/otf" crossorigin />
     <script>
-      // Cursor runs in <head> right after the Typekit stylesheet so the
-      // font download is kicked off as early as possible. The stylesheet
-      // link blocks this script until parsed, which is exactly what we want
-      // (the @font-face must be registered before fonts.load() works).
+      // Cursor uses the PP Acma glyph. Fonts are same-origin via local
+      // @font-face so document.fonts.load() resolves quickly once the
+      // browser has fetched the file.
       const CURSOR_CHAR = 'q';
-      const CURSOR_FONT = 'blockhead-illust-ot';
+      const CURSOR_FONT = 'PPAcma';
       const CURSOR_SIZE = 32;
 
       function applyCursor() {

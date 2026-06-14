@@ -1,4 +1,22 @@
-/* Boxy minimalist black & white. Custom font + cursor are placeholders for now. */
+/* Boxy minimalist black & white. */
+
+@font-face {
+  font-family: 'AxellHostyn';
+  src: url('/fonts/AxellHostyn.ttf') format('truetype');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'SilvanaText';
+  src: url('/fonts/SilvanaText-Regular.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PPAcma';
+  src: url('/fonts/PPAcma-Semibold.otf') format('opentype');
+  font-display: swap;
+}
 
 :root {
   --ink: #000;
@@ -18,9 +36,10 @@ html, body {
   height: 100%;
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'SilvanaText', Georgia, serif;
   font-size: 14px;
   line-height: 1.4;
+  text-transform: lowercase;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -83,14 +102,14 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  font-family: 'PPAcma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .leftnav .artist {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.95rem;
-  line-height: 1.2;
+  font-family: 'AxellHostyn', 'PPAcma', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.1;
 }
 
 .leftnav nav {
@@ -100,9 +119,7 @@ button {
 }
 
 .leftnav .section-label {
-  font-size: 0.88rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.95rem;
   color: var(--ink);
   margin: 1rem 0 0.4rem;
 }
@@ -124,12 +141,10 @@ button {
 }
 
 .leftnav .lang-switch {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  font-size: 0.85rem;
   color: var(--muted);
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .leftnav .lang-switch a.active {
@@ -244,18 +259,17 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  font-family: 'PPAcma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .details h1 {
   margin: 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .details .meta {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--muted);
   display: flex;
   flex-direction: column;
@@ -263,21 +277,20 @@ button {
 }
 
 .details .meta dt {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   margin-top: 0.4rem;
 }
 
 .details .meta dd {
   margin: 0;
   color: var(--ink);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
 }
 
 .details .info {
   margin: 0.5rem 0 0;
-  font-size: 0.85rem;
+  font-family: 'SilvanaText', Georgia, serif;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
@@ -293,9 +306,7 @@ button {
 
 .details .back {
   margin-top: auto;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  font-size: 0.85rem;
   color: var(--muted);
 }
 
@@ -326,9 +337,8 @@ button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  font-size: 0.9rem;
+  font-family: 'PPAcma', sans-serif;
 }
 
 /* ── Contact page ─────────────────────────────────────────────────── */
@@ -339,9 +349,9 @@ button {
 }
 
 .contact h1 {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-family: 'PPAcma', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .contact p {

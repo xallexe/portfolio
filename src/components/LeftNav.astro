@@ -22,7 +22,7 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
   <a class={`artist ${current === 'home' ? 'active' : ''}`} href={homePath}>{site.artist}</a>
 
   <nav>
-    <div class="section-label">— {ui[lang].work}</div>
+    <div class="section-label">{ui[lang].work}</div>
     {[...projects].sort((a, b) => a.order - b.order).map((p) => (
       <a
         href={pathFor(lang, `/work/${p.id}`)}
@@ -37,9 +37,9 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
   <div class="bottom-block">
     <a class={`contact-link ${current === 'contact' ? 'active' : ''}`} href={contactPath}>{ui[lang].contact}</a>
     <div class="lang-switch">
-      <a href={nlPath} class={lang === 'nl' ? 'active' : ''}>NL</a>
+      <a href={nlPath} class={lang === 'nl' ? 'active' : ''}>nl</a>
       <span>/</span>
-      <a href={enPath} class={lang === 'en' ? 'active' : ''}>EN</a>
+      <a href={enPath} class={lang === 'en' ? 'active' : ''}>en</a>
     </div>
   </div>
 </aside>
