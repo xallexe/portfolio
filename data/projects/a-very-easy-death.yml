@@ -1,0 +1,18 @@
+order: 1
+name: a very easy death
+name_en: a very easy death
+title: a very easy death
+title_en: a very easy death
+medium: print
+medium_en: print
+klant: bruikleen publicaties
+column: ""
+photos:
+  - file: /uploads/photos/bp01-copy.jpg
+  - file: /uploads/photos/bp02-copy.jpg
+  - file: /uploads/photos/bp03-copy.jpg
+  - file: /uploads/photos/bp04-copy.jpg
+  - file: /uploads/photos/bp05-copy.jpg
+  - file: /uploads/photos/bp06-copy.jpg
+  - file: /uploads/photos/bp07-copy.jpg
+  - file: /uploads/photos/bp08-copy.jpg
