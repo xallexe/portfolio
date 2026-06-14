@@ -20,13 +20,22 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <title>{fullTitle}</title>
     <link rel="preload" href="/fonts/AxellHostyn.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/SilvanaText-Regular.otf" as="font" type="font/otf" crossorigin />
+    <style is:inline>
+      /* is:inline so Astro doesn't hoist this into the external stylesheet.
+         The cursor script below needs AxellHostyn registered in document.fonts
+         before it runs — the external global.css @font-face arrives later in
+         document order and would race the canvas draw. */
+      @font-face {
+        font-family: 'AxellHostyn';
+        src: url('/fonts/AxellHostyn.ttf') format('truetype');
+        font-display: block;
+      }
+    </style>
     <script>
-      // Cursor uses the AxellHostyn glyph. Fonts are same-origin via local
-      // @font-face so document.fonts.load() resolves quickly once the
-      // browser has fetched the file.
       const CURSOR_CHAR = 'q';
       const CURSOR_FONT = 'AxellHostyn';
       const CURSOR_SIZE = 32;
+      const CURSOR_PX = CURSOR_SIZE - 4;
 
       function applyCursor() {
         const dpr = window.devicePixelRatio || 1;
@@ -36,7 +45,10 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
         const ctx = c.getContext('2d');
         if (!ctx) return;
         ctx.scale(dpr, dpr);
-        ctx.font = `${CURSOR_SIZE - 4}px "${CURSOR_FONT}", sans-serif`;
+        ctx.font = `${CURSOR_PX}px "${CURSOR_FONT}", sans-serif`;
+        // Touching measureText forces the canvas to resolve its font stack
+        // against the FontFaceSet *now*, before fillText snapshots a glyph.
+        ctx.measureText(CURSOR_CHAR);
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'center';
         ctx.fillStyle = '#000';
@@ -54,20 +66,11 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
         style.textContent = `*, *::before, *::after { cursor: ${value} !important; }`;
       }
 
-      function ready() {
-        if (document.fonts.check(`${CURSOR_SIZE - 4}px "${CURSOR_FONT}"`)) {
-          applyCursor();
-          return;
-        }
-        const face = new FontFace(CURSOR_FONT, 'url(/fonts/AxellHostyn.ttf) format("truetype")', { display: 'block' });
-        face.load().then((loaded) => {
-          document.fonts.add(loaded);
-          applyCursor();
-        }).catch(applyCursor);
-      }
-
-      if ('fonts' in document && 'FontFace' in window) {
-        ready();
+      if ('fonts' in document) {
+        document.fonts
+          .load(`${CURSOR_PX}px "${CURSOR_FONT}"`)
+          .then(() => requestAnimationFrame(applyCursor))
+          .catch(applyCursor);
       } else {
         window.addEventListener('load', applyCursor);
       }
