@@ -3,9 +3,17 @@ name: handboek
 title: handboek van een grafisch ontwerper
 medium: print
 klant: bruikleen publicaties
-info: >-
-  een handboek van een grafisch ontwerper is een boek met al de afbeeldingen uit mijn fotogalerij, die een hand en een boek tonen. deze foto’s zijn voornamelijk getrokken tijdens mijn studie, grafisch
-  ontwerp. ik hoop dat vele grafisch ontwerpers zichzelf en hun galerij kunnen herkennen. hopelijk hebben de lezers een kleine glimlach bij het bekijken van dit boek.
+info: een handboek van een grafisch ontwerper is een boek met al de afbeeldingen
+  uit mijn fotogalerij, die een hand en een boek tonen. deze foto’s zijn
+  voornamelijk getrokken tijdens mijn studie, grafisch ontwerp. ik hoop dat vele
+  grafisch ontwerpers zichzelf en hun galerij kunnen herkennen. hopelijk hebben
+  de lezers een kleine glimlach bij het bekijken van dit boek.
+info_en: "\"een handboek van een grafisch ontwerp\" roughly translated as \"a
+  graphic designer's handbook\" is a book i made with all the pictures from my
+  gallery where you could see a hand (mostly mine) and a book i hold. i mostly
+  took these pictures in my years of studying graphic design. with this book i
+  hope to connect with other gaphic designers their gallery on their phone.
+  because i know every graphic designers has photos like these."
 column: ""
 photos:
   - /uploads/photos/fotoshandboekinstagra-03.jpg
