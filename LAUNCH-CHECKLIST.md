@@ -26,7 +26,7 @@ naam, jij blijft enkel als optionele code-collaborator.
 - [ ] Naar [app.netlify.com/signup](https://app.netlify.com/signup)
 - [ ] **"Sign up with email"** kiezen (niet GitHub-koppeling — accounts gescheiden houden)
 - [ ] Email + sterk wachtwoord, bewaar in password manager
-- **Wat ze hierna doet met dit account:** dit wordt haar dagelijkse login om de site te beheren via `axellehostyn.be/admin`.
+- **Wat ze hierna doet met dit account:** dit wordt haar dagelijkse login om de site te beheren via `axellehostyn.com/admin`.
 
 ### 1.3. Domein registreren
 
@@ -81,7 +81,7 @@ Volgorde is belangrijk — elke stap heeft de vorige nodig.
 4. **Axelle logt in op Netlify** → "Add new site" → "Import from Git" → GitHub-repo selecteren (vraagt OAuth-permissie eenmaal)
 5. **Netlify detecteert Astro** automatisch, builds, deploy-URL `<random>.netlify.app` werkt
 6. **Domein binden:**
-   - In Netlify dashboard → Domain settings → Add custom domain → `axellehostyn.be`
+   - In Netlify dashboard → Domain settings → Add custom domain → `axellehostyn.com`
    - In TransIP DNS-tab: 2 records toevoegen (Netlify wizard geeft exact welke)
    - SSL automatisch via Let's Encrypt (~5 min)
 7. **Netlify Identity activeren** voor Decap-auth:
@@ -91,7 +91,7 @@ Volgorde is belangrijk — elke stap heeft de vorige nodig.
 8. **Git Gateway activeren** (zodat Decap kan committen zonder GitHub-account voor haar):
    - Identity → Services → Git Gateway → Enable (vraagt opnieuw GitHub-OAuth, gebruikt jouw collab-toegang)
 9. **Test:**
-   - Axelle gaat naar `axellehostyn.be/admin`
+   - Axelle gaat naar `axellehostyn.com/admin`
    - Login met haar Netlify Identity wachtwoord
    - Wijzigt iets simpels (bv. project-titel "Project 1" → "Test")
    - Save → wacht ~30s → refresh site → wijziging zichtbaar
@@ -141,7 +141,7 @@ Volgorde is belangrijk — elke stap heeft de vorige nodig.
 
 ## Open vragen voor jou (Lode) voordat we live gaan
 
-1. Domein-naam definitief vastleggen?
+1. ~~Domein-naam definitief vastleggen?~~ **`axellehostyn.com`** (gekozen 18-10-2026, was toen vrij). Nog te registreren op Axelles naam; `site` in `astro.config.mjs` staat er al op.
 2. Wil je een About/Bio-sectie toevoegen aan het schema, of pas later?
 3. Sociale media — welke platforms wil ze? (Instagram zeker; Behance? LinkedIn?)
 4. Privacy/cookie-banner nodig? (Voor pure portfolio met geen tracking: nee)

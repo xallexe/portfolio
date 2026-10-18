@@ -107,7 +107,7 @@ button {
 
 .leftnav .artist {
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: calc(1.6rem + 2px);
   line-height: 1.1;
 }
 
@@ -126,6 +126,11 @@ button {
 .leftnav a {
   display: block;
   padding: 0.1rem 0;
+}
+
+/* Project names in the list: 2px above the 14px base. */
+.leftnav nav a {
+  font-size: calc(1rem + 2px);
 }
 
 .leftnav a.active {
