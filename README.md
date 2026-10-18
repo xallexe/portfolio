@@ -107,15 +107,12 @@ Code only. Key files:
 - `src/styles/global.css` — all styling
 - `src/pages/index.astro` — home-page logic (random scroll, column distribution)
 - `src/pages/work/[id].astro` — detail page (horizontal scroll, wheel mapping)
-- `src/layouts/Base.astro` — Typekit cursor + layout shell
+- `src/layouts/Base.astro` — layout shell
 
-The cursor uses the glyph of the letter `q` in `blockhead-illust-ot`
-(Adobe Fonts via Typekit, kit `qyw6yte`). Change it in `Base.astro`
-around lines 20-22.
+The cursor is an orange dot, an inline SVG in `src/styles/global.css`
+(search for `cursor: url`). No font or script needed.
 
 ## Maintenance
 
 - `npm update` periodically (or set up Renovate/Dependabot — TODO)
 - Astro major versions: read the release notes for breaking changes
-- The Adobe Fonts subscription must stay active for the cursor to load;
-  it falls back to the default cursor if Typekit fails to load

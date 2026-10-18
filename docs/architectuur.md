@@ -179,15 +179,12 @@ vindbaar, maar wie de preview-URL heeft kan 'm zien.
 Axelle ooit een GitHub PAT ziet. Netlify houdt server-side een token
 en commit'et namens haar.
 
-## Custom font
+## Fonts en cursor
 
-`Base.astro` injecteert Typekit:
-```html
-<link rel="stylesheet" href="https://use.typekit.net/qyw6yte.css">
-```
-Kit `qyw6yte` op Axelle's Adobe Fonts subscription. Wordt gebruikt voor
-de `q`-glyph cursor. Als haar subscription vervalt → cursor valt terug
-op default, geen build-failure.
+Alle fonts staan lokaal in `public/fonts/`: Maria Magdalena voor naam,
+navigatie en titels, Silvana Text voor lopende tekst. De cursor is een
+oranje bolletje als inline SVG in `global.css`; Typekit wordt niet meer
+geladen.
 
 ## Niet-evidente keuzes
 
