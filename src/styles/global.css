@@ -117,12 +117,6 @@ button {
   gap: 0.25rem;
 }
 
-.leftnav .section-label {
-  font-size: calc(0.95rem + 2px);
-  color: var(--ink);
-  margin: 1rem 0 0.4rem;
-}
-
 .leftnav a {
   display: block;
   padding: 0.1rem 0;
@@ -135,6 +129,13 @@ button {
 
 .leftnav a.active {
   text-decoration: underline;
+}
+
+/* On the home page the artist name is the current page: no underline, not
+   even on hover. Elsewhere it links home and keeps the hover underline. */
+.leftnav .artist.active,
+.leftnav .artist.active:hover {
+  text-decoration: none;
 }
 
 .leftnav .bottom-block {

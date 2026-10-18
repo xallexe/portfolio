@@ -24,7 +24,6 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
   <a class={`artist ${current === 'home' ? 'active' : ''}`} href={homePath}>{site.artist}</a>
 
   <nav>
-    <div class="section-label">{ui[lang].work}</div>
     {[...projects].sort((a, b) => a.order - b.order).map((p) => (
       <a
         href={pathFor(lang, `/work/${p.id}`)}
