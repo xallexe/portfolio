@@ -1,5 +1,5 @@
 order: 1
-name: verbuikt ademlicht
+name: verbruikt ademlicht
 name_en: vebruikt ademlicht
 title: verbuikt ademlicht
 title_en: verbuikt ademlicht
@@ -37,3 +37,6 @@ info_en: >-
 column: ""
 photos:
   - - /uploads/photos/bp22.jpg
+    - /uploads/photos/bp23.jpg
+    - /uploads/photos/bp24.jpg
+    - /uploads/photos/bp25.jpg
