@@ -33,13 +33,14 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
         {localized(lang, p.name, p.name_en)}
       </a>
     ))}
-  </nav>
-
-  <div class="bottom-block">
-    {/* Hidden until the first text is published, so there's no empty page in the menu. */}
+    {/* Always last in the list. Hidden until the first text is published,
+        so there's no empty page in the menu. */}
     {teksten.length > 0 && (
       <a class={current === 'teksten' ? 'active' : ''} href={tekstenPath}>{ui[lang].teksten}</a>
     )}
+  </nav>
+
+  <div class="bottom-block">
     <a class={`contact-link ${current === 'contact' ? 'active' : ''}`} href={contactPath}>{ui[lang].contact}</a>
     <div class="lang-switch">
       <a href={nlPath} class={lang === 'nl' ? 'active' : ''}>nl</a>
