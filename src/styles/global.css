@@ -308,13 +308,15 @@ button {
 
 .details .info > :first-child { margin-top: 0; }
 .details .info > :last-child { margin-bottom: 0; }
-.details .info p { margin: 0 0 0.6rem; }
-.details .info a { color: inherit; border-bottom: 1px solid currentColor; text-decoration: none; }
-.details .info a:hover { opacity: 0.6; }
-.details .info ul, .details .info ol { padding-left: 1.2rem; margin: 0 0 0.6rem; }
-.details .info li { margin-bottom: 0.2rem; }
-.details .info strong { font-weight: 600; }
-.details .info em { font-style: italic; }
+/* Shared with the blog text (.tekst-body) so both bodies read the same. */
+.details .info p, .tekst-body p { margin: 0 0 0.6rem; }
+.details .info a, .tekst-body a { color: inherit; border-bottom: 1px solid currentColor; text-decoration: none; }
+.details .info a:hover, .tekst-body a:hover { opacity: 0.6; }
+.details .info ul, .details .info ol,
+.tekst-body ul, .tekst-body ol { padding-left: 1.2rem; margin: 0 0 0.6rem; }
+.details .info li, .tekst-body li { margin-bottom: 0.2rem; }
+.details .info strong, .tekst-body strong { font-weight: 600; }
+.details .info em, .tekst-body em { font-style: italic; }
 
 .details .back {
   margin-top: auto;
@@ -491,14 +493,12 @@ button {
   margin-bottom: 0.2rem;
 }
 
+/* Same type as the project text (.details .info). */
 .tekst-body {
   margin-top: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.tekst-body a {
-  text-decoration: underline;
+  font-family: 'SilvanaText', Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .tekst-body img {
