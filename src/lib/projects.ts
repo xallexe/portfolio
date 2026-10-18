@@ -57,13 +57,15 @@ function normalizePhoto(raw: RawPhoto): PhotoEntry {
 const projectsRaw: Project[] = projectFiles.map((filename, i) => {
   const id = filename.replace(/\.yml$/, '');
   const data = yaml.load(readFileSync(join(projectsDir, filename), 'utf8')) as Omit<Project, 'id' | 'photos'> & {
-    photos?: RawPhoto[];
+    // Decap's multi-select image picker can store a selection as one nested
+    // list item (`- - /uploads/...`), hence the possible inner arrays.
+    photos?: (RawPhoto | RawPhoto[])[];
   };
   return {
     id,
     ...data,
     order: typeof data.order === 'number' ? data.order : i + 1,
-    photos: (data.photos ?? []).map(normalizePhoto),
+    photos: (data.photos ?? []).flat().map(normalizePhoto),
   };
 });
 

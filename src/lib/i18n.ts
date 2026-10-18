@@ -4,10 +4,10 @@ export const ui = {
   nl: {
     home: 'Home',
     contact: 'Contact',
-    work: 'projects',
+    work: 'projecten',
     close: 'sluiten',
     email: 'email',
-    backToWork: 'terug naar projects',
+    backToWork: 'terug naar projecten',
   },
   en: {
     home: 'Home',

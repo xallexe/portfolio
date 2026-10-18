@@ -40,6 +40,9 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
     <script>
       const CURSOR_CHAR = 'q';
       const CURSOR_FONT = 'blockhead-illust-ot';
+      // Cheese yellow: the glyph is line art with a transparent inside, so a
+      // black cursor vanished on dark photos. Yellow reads on black and white.
+      const CURSOR_COLOR = '#f5c400';
       const CURSOR_SIZE = 32;
       const CURSOR_PX = CURSOR_SIZE - 4;
 
@@ -57,7 +60,7 @@ const fullTitle = title ? `${title} — ${site.artist}` : site.artist;
         ctx.measureText(CURSOR_CHAR);
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = CURSOR_COLOR;
         ctx.fillText(CURSOR_CHAR, CURSOR_SIZE / 2, CURSOR_SIZE / 2);
         const url = c.toDataURL('image/png');
         const half = Math.round(CURSOR_SIZE / 2);

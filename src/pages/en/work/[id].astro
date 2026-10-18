@@ -4,7 +4,7 @@ import Base from '~/layouts/Base.astro';
 import LeftNav from '~/components/LeftNav.astro';
 import PhotoCard from '~/components/PhotoCard.astro';
 import Lightbox from '~/components/Lightbox.astro';
-import { localized, ui, pathFor } from '~/lib/i18n';
+import { localized } from '~/lib/i18n';
 import { type Project } from '~/lib/projects';
 
 export async function getStaticPaths() {
@@ -29,11 +29,20 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
   <div class="layout layout--detail">
     <LeftNav lang={lang} current={project.id} />
 
-    <main class="photos-h" id="photos-h">
-      {project.photos.map((entry, idx) => (
-        <PhotoCard entry={entry} lang={lang} variant="horizontal" id={`p${idx}`} />
-      ))}
-    </main>
+    <div class="carousel">
+      <main class="photos-h" id="photos-h">
+        {project.photos.map((entry, idx) => (
+          <PhotoCard entry={entry} lang={lang} variant="horizontal" id={`p${idx}`} />
+        ))}
+      </main>
+      {project.photos.length > 1 && (
+        <div class="photo-dots" aria-label="photo navigation">
+          {project.photos.map((_, idx) => (
+            <button type="button" data-photo-dot aria-label={`photo ${idx + 1}`} />
+          ))}
+        </div>
+      )}
+    </div>
 
     <aside class="details">
       <h1>{name}</h1>
@@ -43,7 +52,6 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
         {klant && <><dt>client</dt><dd>{klant}</dd></>}
       </dl>
       {infoHtml && <div class="info" set:html={infoHtml} />}
-      <a class="back" href={pathFor(lang, '/')} data-back-to-home>← {ui[lang].backToWork}</a>
     </aside>
   </div>
 
@@ -59,7 +67,9 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
         if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
           e.preventDefault();
           const mult = e.deltaMode === 0 ? 3 : 60;
-          strip.scrollBy({ left: e.deltaY * mult, behavior: 'auto' });
+          // 'instant', not 'auto': .photos-h has scroll-behavior: smooth, so 'auto'
+          // restarted a smooth animation on every wheel tick and felt sluggish.
+          strip.scrollBy({ left: e.deltaY * mult, behavior: 'instant' });
         }
       },
       { passive: false }
@@ -75,14 +85,42 @@ const infoHtml = info ? marked.parse(info, { async: false }) as string : '';
     }
     if (document.readyState === 'complete') scrollToHash();
     else window.addEventListener('load', scrollToHash);
-  }
 
-  document.querySelectorAll<HTMLAnchorElement>('[data-back-to-home]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      if (window.history.length > 1) {
-        e.preventDefault();
-        window.history.back();
+    // Dots under the strip: one per photo, the active one follows the
+    // scroll position, clicking one jumps to that photo.
+    const photos = Array.from(strip.querySelectorAll<HTMLElement>('.photo-h'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-photo-dot]'));
+
+    function currentIndex(): number {
+      const sl = strip!.scrollLeft;
+      // The last photo can't scroll all the way to the left edge, so treat
+      // "scrolled to the end" as being on the last photo.
+      if (sl > 0 && sl >= strip!.scrollWidth - strip!.clientWidth - 2) return photos.length - 1;
+      let best = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < photos.length; i++) {
+        const d = Math.abs(photos[i].offsetLeft - sl);
+        if (d < bestDist) { bestDist = d; best = i; }
       }
-    });
-  });
+      return best;
+    }
+
+    function updateDots() {
+      const idx = currentIndex();
+      dots.forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+    }
+
+    dots.forEach((d, i) => d.addEventListener('click', () => {
+      strip!.scrollTo({ left: photos[i].offsetLeft, behavior: 'smooth' });
+    }));
+
+    let scrollTick = 0;
+    strip.addEventListener('scroll', () => {
+      cancelAnimationFrame(scrollTick);
+      scrollTick = requestAnimationFrame(updateDots);
+    }, { passive: true });
+    updateDots();
+    // Lazy images change the photo widths once they arrive.
+    window.addEventListener('load', updateDots);
+  }
 </script>

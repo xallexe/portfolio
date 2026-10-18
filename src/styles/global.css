@@ -303,6 +303,60 @@ button {
   color: var(--muted);
 }
 
+/* Carousel wraps photos-h + the dots. position: relative so the dots can
+   sit absolutely at its bottom without scrolling along with the horizontal
+   photo strip. overflow:hidden contains them. */
+.carousel {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel .photos-h {
+  height: 100%;
+}
+
+/* Dots under the photo strip. White + mix-blend-mode: difference renders
+   them as the inverse of what's behind: black on light photos, white on
+   dark ones, so they stay visible without a background pill. */
+.photo-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15rem;
+  max-width: 80%;
+  z-index: 10;
+  mix-blend-mode: difference;
+}
+
+.photo-dots button {
+  /* Padding enlarges the click target; the visible dot is the ::before. */
+  padding: 0.45rem;
+  cursor: pointer;
+}
+
+.photo-dots button::before {
+  content: '';
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+}
+
+.photo-dots button[aria-current='true']::before {
+  background: #fff;
+}
+
+.photo-dots button:hover::before {
+  background: #fff;
+  opacity: 0.6;
+}
+
 /* ── Lightbox ─────────────────────────────────────────────────────── */
 
 .lightbox {
@@ -404,9 +458,14 @@ button {
   }
   .layout--detail .leftnav { order: 1; }
   .layout--detail .details { order: 2; padding: 1.25rem 1.5rem; }
-  .layout--detail .photos-h { order: 3; }
+  /* min-width: 0 so the grid item stays phone-wide instead of growing to
+     the full width of the photo strip (which pushed the dots off-screen). */
+  .layout--detail .carousel { order: 3; height: auto; overflow: visible; min-width: 0; }
 
   .details .back { margin-top: 0.6rem; }
+
+  /* Mobile strip has 1rem padding instead of 1.25rem. */
+  .photo-dots { bottom: 1.2rem; }
 
   /* Photos on detail stay horizontal, but get a fixed mobile-friendly height. */
   .photos-h {
