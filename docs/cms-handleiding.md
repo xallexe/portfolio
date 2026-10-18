@@ -5,7 +5,7 @@ zonder code aan te raken.
 
 ## 1. Inloggen
 
-1. Open: <https://precious-panda-b2809f.netlify.app/admin>
+1. Open: <https://axellehostyn.com/admin>
 2. Klik **"Login with Netlify Identity"**.
 3. Twee opties:
    - **Email + wachtwoord** (eerste keer: uit de invite-mail die je

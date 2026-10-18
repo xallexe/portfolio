@@ -45,7 +45,7 @@ Het deploy-mechanisme:
 1. Push naar `main` op GitHub.
 2. Netlify detecteert de push (webhook), draait `npm run build`,
    publiceert `dist/`. Duurt typisch 15–30 sec.
-3. Live op <https://precious-panda-b2809f.netlify.app>.
+3. Live op <https://axellehostyn.com> (Netlify-adres <https://precious-panda-b2809f.netlify.app> blijft ook werken).
 
 ```bash
 git add .

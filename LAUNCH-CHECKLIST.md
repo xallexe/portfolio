@@ -141,7 +141,7 @@ Volgorde is belangrijk — elke stap heeft de vorige nodig.
 
 ## Open vragen voor jou (Lode) voordat we live gaan
 
-1. ~~Domein-naam definitief vastleggen?~~ **`axellehostyn.com`** (gekozen 18-10-2026, was toen vrij). Nog te registreren op Axelles naam; `site` in `astro.config.mjs` staat er al op.
+1. ~~Domein-naam definitief vastleggen?~~ **`axellehostyn.com`** (gekozen 18-10-2026, was toen vrij). Gekocht via Netlify op 18-10-2026 (Netlify DNS, Let's Encrypt-certificaat, `www` en `http` sturen door naar `https://axellehostyn.com`).
 2. Wil je een About/Bio-sectie toevoegen aan het schema, of pas later?
 3. Sociale media — welke platforms wil ze? (Instagram zeker; Behance? LinkedIn?)
 4. Privacy/cookie-banner nodig? (Voor pure portfolio met geen tracking: nee)
