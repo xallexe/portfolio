@@ -322,9 +322,8 @@ button {
   height: 100%;
 }
 
-/* Dots under the photo strip. White + mix-blend-mode: difference renders
-   them as the inverse of what's behind: black on light photos, white on
-   dark ones, so they stay visible without a background pill. */
+/* Dots under the photo strip, in the same orange as the cursor so they
+   stay visible on both light and dark photos. */
 .photo-dots {
   position: absolute;
   left: 50%;
@@ -336,7 +335,6 @@ button {
   gap: 0.15rem;
   max-width: 80%;
   z-index: 10;
-  mix-blend-mode: difference;
 }
 
 .photo-dots button {
@@ -351,15 +349,15 @@ button {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  border: 1.5px solid #fff;
+  border: 1.5px solid #ff6a00;
 }
 
 .photo-dots button[aria-current='true']::before {
-  background: #fff;
+  background: #ff6a00;
 }
 
 .photo-dots button:hover::before {
-  background: #fff;
+  background: #ff6a00;
   opacity: 0.6;
 }
 
