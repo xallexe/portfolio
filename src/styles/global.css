@@ -118,7 +118,7 @@ button {
 }
 
 .leftnav .section-label {
-  font-size: 0.95rem;
+  font-size: calc(0.95rem + 2px);
   color: var(--ink);
   margin: 1rem 0 0.4rem;
 }
