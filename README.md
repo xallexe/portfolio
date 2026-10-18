@@ -108,6 +108,7 @@ Code only. Key files:
 - `src/pages/index.astro` — home-page logic (random scroll, column distribution)
 - `src/pages/work/[id].astro` — detail page (horizontal scroll, wheel mapping)
 - `src/layouts/Base.astro` — layout shell
+- `src/lib/teksten.ts` + `src/pages/teksten/` — blog ("teksten"), data in `data/teksten/*.yml`
 
 The cursor is an orange dot, an inline SVG in `src/styles/global.css`
 (search for `cursor: url`). No font or script needed.

@@ -2,6 +2,7 @@
 import type { Lang } from '~/lib/i18n';
 import { ui, pathFor, localized } from '~/lib/i18n';
 import { projects, site } from '~/lib/projects';
+import { teksten } from '~/lib/teksten';
 
 interface Props {
   lang: Lang;
@@ -11,6 +12,7 @@ interface Props {
 const { lang, current } = Astro.props;
 const homePath = pathFor(lang, '/');
 const contactPath = pathFor(lang, '/contact');
+const tekstenPath = pathFor(lang, '/teksten');
 
 const currentPath = Astro.url.pathname;
 const stripped = currentPath.replace(/^\/en\/?/, '/');
@@ -35,6 +37,10 @@ const enPath = stripped === '/' ? '/en/' : `/en${stripped}`;
   </nav>
 
   <div class="bottom-block">
+    {/* Hidden until the first text is published, so there's no empty page in the menu. */}
+    {teksten.length > 0 && (
+      <a class={current === 'teksten' ? 'active' : ''} href={tekstenPath}>{ui[lang].teksten}</a>
+    )}
     <a class={`contact-link ${current === 'contact' ? 'active' : ''}`} href={contactPath}>{ui[lang].contact}</a>
     <div class="lang-switch">
       <a href={nlPath} class={lang === 'nl' ? 'active' : ''}>nl</a>

@@ -8,6 +8,9 @@ export const ui = {
     close: 'sluiten',
     email: 'email',
     backToWork: 'terug naar projecten',
+    teksten: 'teksten',
+    noTeksten: 'nog geen teksten',
+    backToTeksten: 'alle teksten',
   },
   en: {
     home: 'Home',
@@ -16,6 +19,9 @@ export const ui = {
     close: 'close',
     email: 'email',
     backToWork: 'back to projects',
+    teksten: 'texts',
+    noTeksten: 'no texts yet',
+    backToTeksten: 'all texts',
   },
 } as const;
 

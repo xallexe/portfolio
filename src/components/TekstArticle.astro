@@ -1,0 +1,25 @@
+---
+import { marked } from 'marked';
+import type { Lang } from '~/lib/i18n';
+import { ui, pathFor, localized } from '~/lib/i18n';
+import { formatDate, type Tekst } from '~/lib/teksten';
+
+interface Props {
+  tekst: Tekst;
+  lang: Lang;
+}
+
+const { tekst, lang } = Astro.props;
+const title = localized(lang, tekst.title, tekst.title_en);
+const body = localized(lang, tekst.body, tekst.body_en);
+const bodyHtml = body ? marked.parse(body, { async: false }) as string : '';
+---
+
+<main class="teksten">
+  <article class="tekst">
+    <h1>{title}</h1>
+    <time datetime={tekst.date}>{formatDate(tekst.date, lang)}</time>
+    {bodyHtml && <div class="tekst-body" set:html={bodyHtml} />}
+  </article>
+  <a class="back" href={pathFor(lang, '/teksten')}>← {ui[lang].backToTeksten}</a>
+</main>

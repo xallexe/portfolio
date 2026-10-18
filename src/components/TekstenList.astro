@@ -1,0 +1,27 @@
+---
+import type { Lang } from '~/lib/i18n';
+import { ui, pathFor, localized } from '~/lib/i18n';
+import { teksten, formatDate } from '~/lib/teksten';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<main class="teksten">
+  <h1>{ui[lang].teksten}</h1>
+  {teksten.length === 0 ? (
+    <p class="empty">{ui[lang].noTeksten}</p>
+  ) : (
+    <ul class="teksten-list">
+      {teksten.map((t) => (
+        <li>
+          <a href={pathFor(lang, `/teksten/${t.id}`)}>{localized(lang, t.title, t.title_en)}</a>
+          <time datetime={t.date}>{formatDate(t.date, lang)}</time>
+        </li>
+      ))}
+    </ul>
+  )}
+</main>

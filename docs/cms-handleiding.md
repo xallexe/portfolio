@@ -17,12 +17,13 @@ Eens ingelogd onthoudt je browser het tot je expliciet uitlogt.
 
 ## 2. Wat staat er in de zijbalk?
 
-Twee collecties:
+Drie collecties:
 
 | Collectie | Wat erin staat | Wanneer aanraken |
 |-----------|----------------|------------------|
 | **Site** → "Site instellingen" | Artiestnaam, publiek email, social URLs | Zelden — globale dingen |
 | **Projecten** | Eén entry per project op de website | Hier doe je het meeste |
+| **Teksten** | Je blog: één entry per tekst | Wanneer je iets wil schrijven |
 
 ## 3. Een nieuw project toevoegen
 
@@ -104,6 +105,18 @@ bevestig → **Publish**.
   als links op de contactpagina. **Leeg laten = niet tonen.**
 
 Publish → live binnen 30 sec.
+
+## 7b. Een tekst schrijven (blog)
+
+1. **Teksten** in de zijbalk → **"New Teksten"**.
+2. Vul **Titel**, **Datum** en **Tekst** in. De tekst is markdown:
+   **vet**, *cursief*, links en afbeeldingen via de knoppen bovenaan.
+3. Engelse titel en tekst zijn optioneel; leeg = de Nederlandse versie
+   staat ook op de Engelse site.
+4. Publish zoals bij projecten (zie "Draft-modus").
+
+De menuknop **teksten** verschijnt op de site pas zodra er minstens één
+tekst gepubliceerd is. Nieuwste tekst staat bovenaan, op datum.
 
 ## 8. Twee talen
 

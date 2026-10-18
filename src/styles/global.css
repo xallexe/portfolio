@@ -435,6 +435,76 @@ button {
   opacity: 0.6;
 }
 
+/* ── Teksten (blog) ───────────────────────────────────────────────── */
+
+/* Own scroll area: .layout is 100vh with overflow hidden on desktop. */
+.teksten {
+  padding: 2rem;
+  max-width: 640px;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.teksten::-webkit-scrollbar { display: none; }
+
+.teksten h1 {
+  font-family: 'MariaMagdalena', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.teksten time {
+  display: block;
+  font-family: 'MariaMagdalena', sans-serif;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.teksten-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.teksten-list a {
+  font-family: 'MariaMagdalena', sans-serif;
+  font-size: calc(1rem + 2px);
+}
+
+.teksten .empty {
+  color: var(--muted);
+}
+
+.tekst h1 {
+  margin-bottom: 0.2rem;
+}
+
+.tekst-body {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.tekst-body a {
+  text-decoration: underline;
+}
+
+.tekst-body img {
+  margin: 1rem 0;
+}
+
+.teksten .back {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: 'MariaMagdalena', sans-serif;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 /* ── Mobile ───────────────────────────────────────────────────────── */
 
 @media (max-width: 720px) {
@@ -472,6 +542,8 @@ button {
   .layout--detail .carousel { order: 3; height: auto; overflow: visible; min-width: 0; }
 
   .details .back { margin-top: 0.6rem; }
+
+  .teksten { height: auto; overflow: visible; padding: 1.25rem 1.5rem; }
 
   /* Mobile strip has 1rem padding instead of 1.25rem. */
   .photo-dots { bottom: 1.2rem; }

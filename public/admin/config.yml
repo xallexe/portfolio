@@ -124,3 +124,41 @@ collections:
           media_library:
             config:
               multiple: true
+
+  # ── Teksten (blog): one YAML file per text, newest first on the site ─
+  - name: teksten
+    label: "Teksten"
+    label_singular: "Tekst"
+    folder: "data/teksten"
+    extension: "yml"
+    format: "yml"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{date}} · {{title}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - label: "Titel"
+        name: "title"
+        widget: "string"
+
+      - label: "Titel — Engels (optioneel, valt terug op NL)"
+        name: "title_en"
+        widget: "string"
+        required: false
+
+      - label: "Datum"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "DD-MM-YYYY"
+        time_format: false
+
+      - label: "Tekst (markdown — bold/italic/links/afbeeldingen)"
+        name: "body"
+        widget: "markdown"
+
+      - label: "Tekst — Engels (optioneel, valt terug op NL)"
+        name: "body_en"
+        widget: "markdown"
+        required: false

@@ -1,0 +1,15 @@
+---
+import Base from '~/layouts/Base.astro';
+import LeftNav from '~/components/LeftNav.astro';
+import TekstenList from '~/components/TekstenList.astro';
+import { ui } from '~/lib/i18n';
+
+const lang = 'nl' as const;
+---
+
+<Base lang={lang} title={ui[lang].teksten}>
+  <div class="layout">
+    <LeftNav lang={lang} current="teksten" />
+    <TekstenList lang={lang} />
+  </div>
+</Base>

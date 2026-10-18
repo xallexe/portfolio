@@ -1,0 +1,24 @@
+---
+import Base from '~/layouts/Base.astro';
+import LeftNav from '~/components/LeftNav.astro';
+import TekstArticle from '~/components/TekstArticle.astro';
+import { localized } from '~/lib/i18n';
+import { type Tekst } from '~/lib/teksten';
+
+export async function getStaticPaths() {
+  const { teksten } = await import('~/lib/teksten');
+  return teksten.map((t) => ({ params: { id: t.id }, props: { tekst: t } }));
+}
+
+interface Props { tekst: Tekst }
+
+const { tekst } = Astro.props;
+const lang = 'nl' as const;
+---
+
+<Base lang={lang} title={localized(lang, tekst.title, tekst.title_en)}>
+  <div class="layout">
+    <LeftNav lang={lang} current="teksten" />
+    <TekstArticle tekst={tekst} lang={lang} />
+  </div>
+</Base>
