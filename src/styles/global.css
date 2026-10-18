@@ -1,8 +1,8 @@
 /* Boxy minimalist black & white. */
 
 @font-face {
-  font-family: 'AxellHostyn';
-  src: url('/fonts/AxellHostyn.ttf') format('truetype');
+  font-family: 'MariaMagdalena';
+  src: url('/fonts/MariaMagdalena-Regular.otf') format('opentype');
   font-display: block;
 }
 
@@ -96,7 +96,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  font-family: 'AxellHostyn', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'MariaMagdalena', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .leftnav .artist {
@@ -252,7 +252,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  font-family: 'AxellHostyn', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'MariaMagdalena', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .details h1 {
@@ -385,7 +385,7 @@ button {
   top: 1rem;
   right: 1rem;
   font-size: 0.9rem;
-  font-family: 'AxellHostyn', sans-serif;
+  font-family: 'MariaMagdalena', sans-serif;
 }
 
 /* ── Contact page ─────────────────────────────────────────────────── */
@@ -396,7 +396,7 @@ button {
 }
 
 .contact h1 {
-  font-family: 'AxellHostyn', sans-serif;
+  font-family: 'MariaMagdalena', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
 }
