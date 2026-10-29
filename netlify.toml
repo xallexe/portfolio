@@ -24,6 +24,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# The portfolio PDF (31 MB) lives on Google Drive: served from Netlify it
+# cost ~20 credits per GB, mostly from the Instagram link. 302 so the
+# target can still change later.
+[[redirects]]
+  from = "/portfolio.pdf"
+  to = "https://drive.google.com/file/d/1qlYgebZapRmv6_6uHx-1xWyLGl13moZR/view"
+  status = 302
+  force = true
+
 # Decap CMS is a SPA at /admin/ — serve index.html for any sub-route.
 [[redirects]]
   from = "/admin/*"
